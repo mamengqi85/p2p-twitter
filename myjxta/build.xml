@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2005 Sun Microsystems, Inc. All rights reserved.
+
+Redistributions in source code form must reproduce the above copyright and this condition.
+
+The contents of this file are subject to the Sun Project JXTA License Version 1.1 (the "License"); you may not use this file except in compliance with the License. A copy of the License is available at http://www.jxta.org/jxta_license.html.
+-->
+
+<project name="myjxta" basedir="." default="run">
+
+  <property name="src" value="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/src"/>
+  <property name="lib" value="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib"/>
+  <property name="build" value="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes"/>
+  <property name="doc" value="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/doc"/>
+
+  <property name="main" value="net.jxta.myjxta.Main"/>
+  <property name="product" value="MyJXTA"/>
+  <property name="home" value="myjxta"/>
+
+  <property name="debug" value="false"/>
+  <property name="deprecation" value="off"/>
+  <property name="optimize" value="off"/>
+
+  <target name="prepare">
+    <condition property="ant.isValid">
+      <or>
+        <contains string="Apache Ant version 1.6.5 compiled on October 26 2005"
+                  substring=" 1.6"/>
+      </or>
+    </condition>
+
+    <fail unless="ant.isValid"
+          message="please upgrade ant to 1.6+: http://ant.apache.org"/>
+
+    <tstamp>
+      <format property="bod" pattern="yyyy.MM.dd:HH.mm.ss Z"
+        timezone="GMT"/>
+    </tstamp>
+
+    <condition property="net.jxta.build.version" value="20071107">
+      <not>
+        <isset property="net.jxta.build.version"/>
+      </not>
+    </condition>
+
+    <path id="classpath.compile">
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxta.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtaext.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jdom.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/swingx.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/freetts.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/prefuse.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/TableLayout.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jspeex.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtacms.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtashell.jar"/>
+    </path>
+
+    <path id="classpath.runtime">
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/bcprov-jdk14.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/javax.servlet.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/org.mortbay.jetty.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/swixml.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jlfgr-1_0.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jogg-0.0.05.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jorbis-0.0.12.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/tritonus_share.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/vorbisspi1.0.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/cmulex.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/cmu_time_awb.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/cmutimelex.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/cmu_us_kal.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/en_us.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jsapi.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/prefuse.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/TableLayout.jar"/>
+      <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jspeex.jar"/>
+    </path>
+  </target>
+
+  <target name="build" depends="prepare" description="build">
+    <delete dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes"/>
+    <mkdir dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes"/>
+
+    <javac destdir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes" target="1.5" debug="true"
+      deprecation="on" optimize="off">
+      <src path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/src"/>
+      <classpath refid="classpath.compile"/>
+    </javac>
+
+    <copy todir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes/net/jxta/myjxta/resources">
+      <fileset dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/src/net/jxta/myjxta/resources">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="run" depends="build" description="run">
+    <java classname="net.jxta.myjxta.Main" fork="yes">
+      <classpath path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes"/>
+      <classpath refid="classpath.runtime"/>
+      <classpath refid="classpath.compile"/>
+<!--
+      <arg value="-server" />
+      <jvmarg value="-Xms64M" />
+      <jvmarg value="-Xmx192M" />
+-->
+      <sysproperty key="JXTA_HOME" value="${home}"/>
+    </java>
+  </target>
+
+  <target name="doc" depends="prepare" description="doc">
+    <delete dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/docs/api"/>
+    <mkdir dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/docs/api"/>
+
+    <javadoc classpathref="classpath.compile" destdir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/docs/api"
+      use="true" windowtitle="MyJXTA 2.5 [2007.11.07:19.36.12 +0000]"
+      additionalparam="-breakiterator">
+      <link href="http://java.sun.com/j2se/1.4.1/docs/api/"/>
+      <sourcepath>
+        <pathelement location="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/src" />
+      </sourcepath>
+      <package name="net.jxta.myjxta.*" />
+      <group title="MyJXTA Standard J2SE API" packages="net.jxta.myjxta*"/>
+      <doctitle>MyJXTA 2.5 [2007.11.07:19.36.12 +0000]</doctitle>
+      <header>&lt;a href='http://myjxta.dev.java.net' target='_blank'&gt;MyJXTA&lt;/a&gt;</header>
+      <footer>2007.11.07:19.36.12 +0000</footer>
+    </javadoc>
+
+    <target name="clean" description="clean">
+      <delete dir="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/classes"/>
+      <delete dir="${home}"/>
+    </target>
+  </target>
+</project>

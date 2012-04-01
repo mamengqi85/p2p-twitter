@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="classes" path="src"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxta.jar"/>
+	<classpathentry kind="con" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtaext.jar"/>
+	<classpathentry kind="con" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/swingx.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/freetts.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/prefuse.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/TableLayout.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jspeex.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtacms.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-2.5-src/lib/jxtashell.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-minimal-2.5/myjxta.jar"/>
+	<classpathentry kind="lib" path="/home/mamengqi85/java/CS5412/myjxta/myjxta-minimal-2.5/lib/myjxta.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
