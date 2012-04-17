@@ -1,16 +1,11 @@
 package DHT;
 
-import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.util.HashSet;
-import java.util.Set;
-
 import de.uniba.wiai.lspi.chord.data.URL;
 import de.uniba.wiai.lspi.chord.service.AsynChord;
-import de.uniba.wiai.lspi.chord.service.Chord;
 import de.uniba.wiai.lspi.chord.service.ServiceException;
 
-public class chordDHT {
+public class AsynChordDHT {
 	
 	public AsynChord create(String port) {
 		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile ();
@@ -61,26 +56,18 @@ public class chordDHT {
 	public void insertKey(AsynChord chord, StringKey myKey, String data) {
 		MyCallBack callback = new MyCallBack();
 		chord.insert(myKey, data, callback);
-		//TODO: how to catch throwable t?
-		//Throwable t = new Throwable();
 		//callback.inserted(myKey, data, null);
 	}
 	
 	public void removeKey(AsynChord chord, StringKey myKey, String data) {
 		MyCallBack callback = new MyCallBack();
 		chord.remove(myKey, data, callback);
-		//TODO: how to catch throwable t?
-		//Throwable t = new Throwable();
 		//callback.removed(myKey, data, null);
 	}
 	
 	public void retrieveKey(AsynChord chord, StringKey myKey) {
 		MyCallBack callback = new MyCallBack();
-		
 		chord.retrieve(myKey, callback);
-		Set<Serializable> entries = new HashSet<Serializable>();
-		//TODO: how to catch throwable t?
-		//Throwable t = new Throwable();
 		//callback.retrieved(myKey, entries, null);
 	}
 }

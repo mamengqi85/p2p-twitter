@@ -34,7 +34,7 @@ public class MyCallBack implements de.uniba.wiai.lspi.chord.service.ChordCallbac
 			System.out.println("start retrieving!");
 			System.out.println(entries);
 		} else {
-			System.err.println("Removal of " + "the entry with key " + key + " failed!");
+			System.err.println("Retrievement of " + "the entry with key " + key + " failed!");
 			t.printStackTrace();
 		}
 	}
