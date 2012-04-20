@@ -32,7 +32,6 @@ public class p2pServer implements Runnable{
 		}
 	}
 	
-	
 	@Override
 	public void run() {
 		while(!stop){
