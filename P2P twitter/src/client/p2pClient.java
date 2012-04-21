@@ -7,7 +7,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import RPC.RequestMessage;
-import RPC.ResponseMessage;
 import client.RequestHandler;
 
 public class p2pClient implements Runnable{
