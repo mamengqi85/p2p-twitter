@@ -3,19 +3,20 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Socket;
 
 public class ConsoleClient {
-	  private BufferedReader bReader;
-	  
+	
+	private BufferedReader bReader;
 	
 	public ConsoleClient(){
-		  InputStreamReader stdin = new  InputStreamReader(System.in);
-		   bReader = new BufferedReader(stdin);
+		InputStreamReader stdin = new  InputStreamReader(System.in);
+		bReader = new BufferedReader(stdin);
 	}
 	  
 	
 	public static void main(){
-		
+		ConsoleClient client = new ConsoleClient();
 	}
 	
 	

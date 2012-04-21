@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import BasicTypes.User;
 import RPC.RequestMessage;
+import Server.ServerRequestHandler;
 
 public class p2pServer implements Runnable{
 	
@@ -18,8 +19,9 @@ public class p2pServer implements Runnable{
 	ServerSocket ServerSocket;
 	ArrayList<User> userlist;
 	
-	public static void main(){
-		
+    public static void main(String args[]) {
+		p2pServer server = new p2pServer();
+		server.run();
 	}
 	
 	public void stop(){
@@ -43,21 +45,26 @@ public class p2pServer implements Runnable{
 		while(!stop){
 			try {
 				Socket socket = ServerSocket.accept();
+				
+				ServerRequestHandler sHandler = new ServerRequestHandler(socket);
+				sHandler.run();
+				
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				RequestMessage rm =  (RequestMessage)ois.readObject();
 				
-				
 				oos.writeObject("hi");
+				System.out.println(rm.getString());
+				
+				
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}		
 		}
 	}
-	
 }

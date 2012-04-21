@@ -10,7 +10,7 @@ import RPC.RequestMessage;
 
 public class RequestHandler implements Runnable{
 
-	
+	//TODO: Y here?
 	static Socket socket;
 	static String SERVERIP = "localhost";
 	static int SERVERPORT = 5412;
