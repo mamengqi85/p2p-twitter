@@ -11,10 +11,16 @@ import BasicTypes.User;
 import RPC.RequestMessage;
 
 public class p2pServer implements Runnable{
+	
+	private final int PORT = 5412;
 
 	boolean stop = false;
 	ServerSocket ServerSocket;
 	ArrayList<User> userlist;
+	
+	public static void main(){
+		
+	}
 	
 	public void stop(){
 		stop = true;
@@ -24,9 +30,9 @@ public class p2pServer implements Runnable{
 		userlist = new ArrayList<User>();
 		if(ServerSocket == null){
 			try {
-				ServerSocket = new ServerSocket(5412);
+				ServerSocket = new ServerSocket(PORT);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.err.println("Failed to start p2p Server!");
 				e.printStackTrace();
 			}
 		}
