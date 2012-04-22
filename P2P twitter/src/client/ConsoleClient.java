@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.StringTokenizer;
 
 import BasicTypes.User;
 import BasicTypes.UserInfo;
@@ -12,6 +13,7 @@ import DHT.ChordDHT;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 import RPC.ResponseMessage;
+import Utility.Utility;
 
 import client.ClientConstants.COMMAND;
 import de.uniba.wiai.lspi.chord.service.Chord;
@@ -22,7 +24,8 @@ public class ConsoleClient implements Runnable{
 	  private BufferedReader bReader;
 	  private boolean stop = false;
 	  private String ip;
-	  private int port;
+	  private String port;
+	  private Chord chord;
 	
 	public ConsoleClient(){
 		InputStreamReader stdin = new  InputStreamReader(System.in);
@@ -34,7 +37,7 @@ public class ConsoleClient implements Runnable{
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		this.port = 12345;
+		this.port = "12345";
 	}
 	
 	public static void main(String args[]){
@@ -69,14 +72,16 @@ public class ConsoleClient implements Runnable{
 			
 		} else if (rm.opeID.equals(RPCConstants.JOIN)){
 			//parse result
-			//TODO:move the declaration to Client?
+			StringTokenizer st = new StringTokenizer(rm.result,"#");
+			String isExisted = st.nextToken();
 			ChordDHT dht = new ChordDHT();
-			Chord chord;/*
-			if (isExisted) {
+			if (Utility.StrToBool(isExisted)) {
 				chord = dht.create(ip, port);
 			} else {
-				
-			}*/
+				String destIp = st.nextToken();
+				String destPort = st.nextToken();
+				chord = dht.join(destIp, destPort, ip, port);
+			}
 		} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 			
 		} else {
