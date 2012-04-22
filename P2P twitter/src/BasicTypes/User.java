@@ -26,6 +26,10 @@ public class User {
 		return this.node;
 	}
 	
+	public void SetNode(Node node){
+		this.node = node;
+	}
+	
 	public User(String str){
 		StringTokenizer st = new StringTokenizer("#");
 		UserID = st.nextToken();

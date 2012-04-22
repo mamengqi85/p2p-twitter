@@ -9,6 +9,7 @@ import BasicTypes.Node;
 import BasicTypes.User;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
+import RPC.ResponseMessage;
 
 public class ServerRequestHandler implements Runnable{
 	
@@ -28,17 +29,20 @@ public class ServerRequestHandler implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		ObjectInputStream ois;
 		try {
-			ois = new ObjectInputStream(socket.getInputStream());
+			System.out.println("ready to serve");
+			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			RequestMessage rm =  (RequestMessage)ois.readObject();
+			ResponseMessage resM = new ResponseMessage();
+			resM.callID = rm.callID;
+			resM.opeID = rm.opeID;
 			if(rm.opeID.equals(RPCConstants.REGISTER)){
-				
+				System.out.println("REGISTER");
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
-				
+				System.out.println("LOGIN");
 			} else if (rm.opeID.equals(RPCConstants.JOIN)){
+				System.out.println("JOIN");
 				if (tables.availableList.size() == 0) {
 					//TODO: construct response to create table
 				} else {
@@ -46,10 +50,11 @@ public class ServerRequestHandler implements Runnable{
 					//TODO: construct response to join table
 				}
 			} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
-				
+				System.out.println("RETRIEVE");
 			} else {
 				
 			}
+			oos.writeObject(resM);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

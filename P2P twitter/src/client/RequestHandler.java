@@ -22,9 +22,12 @@ public class RequestHandler implements Runnable{
 	static int SERVERPORT = 5412;
 	
 	RequestMessage rm;
+	ConsoleClient client;
 	
-	public RequestHandler(RequestMessage rm) {
+	
+	public RequestHandler(RequestMessage rm,ConsoleClient client) {
 		this.rm = rm;
+		this.client = client;
 		if(socket == null){
 			try {
 				socket = new Socket(SERVERIP,SERVERPORT);
@@ -46,29 +49,9 @@ public class RequestHandler implements Runnable{
 			ObjectOutputStream oss = new ObjectOutputStream(socket.getOutputStream());
 			oss.writeObject(rm);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			ois.readObject();
-			
-			//process response
-			ResponseMessage rspm =  (ResponseMessage)ois.readObject();
-			if(rspm.opeID.equals(RPCConstants.REGISTER)){
-				
-			} else if (rspm.opeID.equals(RPCConstants.LOGIN)){
-				
-			} else if (rspm.opeID.equals(RPCConstants.JOIN)){
-				//parse result
-				//TODO:move the declaration to Client?
-				ChordDHT dht = new ChordDHT();
-				Chord chord;
-				if (isExisted) {
-					chord = dht.create(ip, port);
-				} else {
-					chord = 
-				}
-			} else if (rspm.opeID.equals(RPCConstants.RETRIEVE)){
-				
-			} else {
-				
-			}
+			client.callBack((ResponseMessage)ois.readObject());
+			oss.close();
+			ois.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

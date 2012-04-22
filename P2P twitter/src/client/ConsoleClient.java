@@ -23,9 +23,10 @@ public class ConsoleClient implements Runnable{
 		   bReader = new BufferedReader(stdin);
 	}
 	
-	public static void main(){
-
+	public static void main(String args[]){
 		ConsoleClient client = new ConsoleClient();
+		Thread t = new Thread(client);
+		t.start();
 	}
 	
 	
@@ -46,8 +47,15 @@ public class ConsoleClient implements Runnable{
 	}
 	
 	public ResponseMessage callBack(ResponseMessage rm){
-		
+		System.out.println("recieved response: " + rm.opeID);
 		return null;
+	}
+	
+	
+	private void sendRequest(RequestMessage rm){
+		RequestHandler rh = new RequestHandler(rm, this);
+		Thread t = new Thread(rh);
+		t.run();
 	}
 	
 	
@@ -60,6 +68,7 @@ public class ConsoleClient implements Runnable{
 		RequestMessage rm = new RequestMessage();
 		rm.opeID = RPCConstants.REGISTER;
 		rm.parm = user.getString();
+		sendRequest(rm);
 	}
 	
 	private void createGroup(){
@@ -89,11 +98,11 @@ public class ConsoleClient implements Runnable{
 	
 	
 	COMMAND ParseCommand(String str){
-		if(str.toLowerCase() == "l"){
+		if(str.toLowerCase().equals("l")){
 			return COMMAND.LOGIN;
-		}else if(str.toLowerCase() == "rg"){
+		}else if(str.toLowerCase().equals("rg")){
 			return COMMAND.REGISTER;
-		}else if(str.toLowerCase() == "rt"){
+		}else if(str.toLowerCase().equals("rt")){
 			return COMMAND.RETRIEVE;
 		}else{
 			return COMMAND.INVALID;
@@ -104,9 +113,10 @@ public class ConsoleClient implements Runnable{
 	@Override
 	public void run() {
 		Init();
+		/*
 		while(!login()){
 			Put("invalid username or password");
-		}
+		}*/
 		while(!stop){
 			Put("input the command");
 			String commandString = Gets();
@@ -115,6 +125,7 @@ public class ConsoleClient implements Runnable{
 			case RETRIEVE:
 				break;
 			case REGISTER:
+				register();
 				break;
 			default:
 				break;

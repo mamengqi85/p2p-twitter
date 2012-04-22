@@ -46,24 +46,12 @@ public class p2pServer implements Runnable{
 	public void run() {
 		while(!stop){
 			try {
+				System.out.println("Server Started");
 				Socket socket = ServerSocket.accept();
-				
 				ServerRequestHandler sHandler = new ServerRequestHandler(socket, tables);
-				sHandler.run();
-				
-				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				RequestMessage rm =  (RequestMessage)ois.readObject();
-				
-				oos.writeObject("hi");
-				System.out.println(rm.getString());
-				
-				
-				
+				Thread t = new Thread(sHandler);
+				t.run();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}		

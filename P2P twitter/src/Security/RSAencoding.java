@@ -23,8 +23,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class RSAencoding {
 
-	
-	
 	static Cipher cipher;
 	
 	 public RSAencoding() {
