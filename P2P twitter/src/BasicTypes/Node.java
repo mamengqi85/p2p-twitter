@@ -8,4 +8,5 @@ public class Node implements Serializable{
 	public InetAddress ip;
 	public int port;
 	public PublicKey pk;
+	
 }

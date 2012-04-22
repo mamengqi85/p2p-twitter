@@ -12,14 +12,18 @@ public class User {
 		password = "INITIAL";
 	}
 	
-	public User(String uid, String pwd){
+	public User(String uid, String pwd, Node node){
 		this.UserID = uid;
 		this.password = pwd;
-		//this.node = node;
+		this.node = node;
 	}
 	
 	public String getString(){
 		return UserID + "#" + password + "#"; 
+	}
+	
+	public Node getNode() {
+		return this.node;
 	}
 	
 	public User(String str){
@@ -28,3 +32,4 @@ public class User {
 		password = st.nextToken();
 	}
 }
+
