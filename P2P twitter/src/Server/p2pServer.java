@@ -17,7 +17,9 @@ public class p2pServer implements Runnable{
 
 	boolean stop = false;
 	ServerSocket ServerSocket;
+	//TODO: remove?
 	ArrayList<User> userlist;
+	ServerTable tables = new ServerTable();
 	
     public static void main(String args[]) {
 		p2pServer server = new p2pServer();
@@ -46,7 +48,7 @@ public class p2pServer implements Runnable{
 			try {
 				Socket socket = ServerSocket.accept();
 				
-				ServerRequestHandler sHandler = new ServerRequestHandler(socket);
+				ServerRequestHandler sHandler = new ServerRequestHandler(socket, tables);
 				sHandler.run();
 				
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());

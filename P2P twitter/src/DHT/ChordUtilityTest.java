@@ -42,8 +42,8 @@ public class ChordUtilityTest {
 	@Test
 	public void testChord () {
 		ChordDHT dht = new ChordDHT();
-		Chord chord1 = dht.create("12345");
-		Chord chord2 = dht.join("12345", "8181");
+		Chord chord1 = dht.create("127.0.0.1", "12345");
+		Chord chord2 = dht.join("127.0.0.1", "12345", "127.0.0.1", "8181");
 		
 		System.out.println("start Chord2:");
 		String data = "Just an Example.";
@@ -57,7 +57,7 @@ public class ChordUtilityTest {
 		System.out.println(dht.retrieveKey(chord2, myKey2));
 		System.out.println("end Chord2");
 		
-		Chord chord3 = dht.join("12345", "8282");
+		Chord chord3 = dht.join("127.0.0.1", "12345", "127.0.0.1", "8282");
 		
 		System.out.println("start Chord3:");
 		System.out.println(dht.retrieveKey(chord3, myKey));

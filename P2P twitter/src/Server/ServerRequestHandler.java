@@ -5,20 +5,21 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import BasicTypes.Node;
 import BasicTypes.User;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 
 public class ServerRequestHandler implements Runnable{
 	
-	
 	Socket socket;
-	public ServerRequestHandler(Socket socket){
+	ServerTable tables;
+	public ServerRequestHandler(Socket socket, ServerTable tables){
 		this.socket = socket;
+		this.tables = tables;
 	}
 	
 	boolean register(User user){
-		
 		return false;
 	}
 	
@@ -35,11 +36,18 @@ public class ServerRequestHandler implements Runnable{
 			RequestMessage rm =  (RequestMessage)ois.readObject();
 			if(rm.opeID.equals(RPCConstants.REGISTER)){
 				
-			}else if(rm.opeID.equals(RPCConstants.LOGIN)){
+			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 				
-			}else if(rm.opeID.equals(RPCConstants.RETRIEVE)){
+			} else if (rm.opeID.equals(RPCConstants.JOIN)){
+				if (tables.availableList.size() == 0) {
+					//TODO: construct response to create table
+				} else {
+					Node bootstrapNode = tables.SelectRandomNode();
+					//TODO: construct response to join table
+				}
+			} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 				
-			}else{
+			} else {
 				
 			}
 		} catch (IOException e) {

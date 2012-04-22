@@ -2,29 +2,27 @@ package DHT;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.util.HashSet;
 import java.util.Set;
 
 import de.uniba.wiai.lspi.chord.data.URL;
-import de.uniba.wiai.lspi.chord.service.AsynChord;
 import de.uniba.wiai.lspi.chord.service.Chord;
 import de.uniba.wiai.lspi.chord.service.ServiceException;
 
 public class ChordDHT {
 	
-	public Chord create(String port) {
+	public Chord create(String ip, String port) {
 		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile ();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
-		URL localURL = null;
+		URL url = null;
 		try {
-			localURL = new URL(protocol + "://localhost:" + port + "/"); 
+			url = new URL(protocol + "://" + ip + ":" + port + "/");
 		} catch ( MalformedURLException e) {
 				System.out.println(e.getLocalizedMessage());
 				throw new RuntimeException(e);
 		}
 		Chord chord = new de.uniba.wiai.lspi.chord.service.impl.ChordImpl();
 		try {
-			chord.create(localURL);
+			chord.create(url);
 		} catch (ServiceException e) {
 			throw new RuntimeException ("Could not create DHT !", e);
 		}
@@ -32,18 +30,20 @@ public class ChordDHT {
 		return chord;
 	}
 	
-	public Chord join(String destPort, String localPort) {
+	public Chord join(String destIp, String destPort, String localIp, String localPort) {
 		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
 		URL localURL = null;
 		try {
-			localURL = new URL (protocol + "://localhost:" + localPort + "/");
+			//localURL = new URL (protocol + "://localhost:" + localPort + "/");
+			localURL = new URL (protocol + "://" + localIp + ":" + localPort + "/");
 		} catch (MalformedURLException e){
 			throw new RuntimeException(e);
 		}
 		URL bootstrapURL = null;
 		try {
-			bootstrapURL = new URL (protocol + "://localhost:" + destPort + "/");
+			//bootstrapURL = new URL (protocol + "://localhost:" + destPort + "/");
+			bootstrapURL = new URL(protocol + "://" + destIp + ":" + destPort + "/");
 		} catch ( MalformedURLException e) {
 			throw new RuntimeException(e);
 		}

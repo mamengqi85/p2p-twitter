@@ -15,5 +15,7 @@ public class User {
 		return UserID + "#" + password + "#"; 
 	}
 	
-	
+	public Node getNode() {
+		return this.node;
+	}
 }

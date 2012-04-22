@@ -19,8 +19,6 @@ public class ResponseMessage implements Serializable{
 		result = st.nextToken();
 	}
 	
-	
-	
 	public ResponseMessage(String callID,String opeID,String result){
 		this.callID = callID;
 		this.opeID = opeID;

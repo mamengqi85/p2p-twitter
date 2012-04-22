@@ -6,7 +6,13 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import de.uniba.wiai.lspi.chord.service.Chord;
+
+import BasicTypes.Node;
+import DHT.ChordDHT;
+import RPC.RPCConstants;
 import RPC.RequestMessage;
+import RPC.ResponseMessage;
 
 public class RequestHandler implements Runnable{
 
@@ -41,6 +47,28 @@ public class RequestHandler implements Runnable{
 			oss.writeObject(rm);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			ois.readObject();
+			
+			//process response
+			ResponseMessage rspm =  (ResponseMessage)ois.readObject();
+			if(rspm.opeID.equals(RPCConstants.REGISTER)){
+				
+			} else if (rspm.opeID.equals(RPCConstants.LOGIN)){
+				
+			} else if (rspm.opeID.equals(RPCConstants.JOIN)){
+				//parse result
+				//TODO:move the declaration to Client?
+				ChordDHT dht = new ChordDHT();
+				Chord chord;
+				if (isExisted) {
+					chord = dht.create(ip, port);
+				} else {
+					chord = 
+				}
+			} else if (rspm.opeID.equals(RPCConstants.RETRIEVE)){
+				
+			} else {
+				
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
