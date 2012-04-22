@@ -3,24 +3,37 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import BasicTypes.User;
+import DHT.ChordDHT;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 import RPC.ResponseMessage;
 
 import client.ClientConstants.COMMAND;
+import de.uniba.wiai.lspi.chord.service.Chord;
 
 import sun.util.logging.resources.logging;
 
 public class ConsoleClient implements Runnable{
 	  private BufferedReader bReader;
 	  private boolean stop = false;
-	  
+	  private String ip;
+	  private int port;
 	
 	public ConsoleClient(){
-		  InputStreamReader stdin = new  InputStreamReader(System.in);
-		   bReader = new BufferedReader(stdin);
+		InputStreamReader stdin = new  InputStreamReader(System.in);
+		bReader = new BufferedReader(stdin);
+		try {
+		    InetAddress addr = InetAddress.getLocalHost();
+		    byte[] ipAddr = addr.getAddress();
+		    ip = ipAddr[0] + "." + ipAddr[1] + "." + ipAddr[2] + "." + ipAddr[3];
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.port = 12345;
 	}
 	
 	public static void main(String args[]){
@@ -47,17 +60,34 @@ public class ConsoleClient implements Runnable{
 	}
 	
 	public ResponseMessage callBack(ResponseMessage rm){
-		System.out.println("recieved response: " + rm.opeID);
+			System.out.println("recieved response: " + rm.opeID);
+		if(rm.opeID.equals(RPCConstants.REGISTER)){
+			
+		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
+			
+		} else if (rm.opeID.equals(RPCConstants.JOIN)){
+			//parse result
+			//TODO:move the declaration to Client?
+			ChordDHT dht = new ChordDHT();
+			Chord chord;/*
+			if (isExisted) {
+				chord = dht.create(ip, port);
+			} else {
+				
+			}*/
+		} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
+			
+		} else {
+		
+		}
 		return null;
 	}
-	
 	
 	private void sendRequest(RequestMessage rm){
 		RequestHandler rh = new RequestHandler(rm, this);
 		Thread t = new Thread(rh);
 		t.run();
 	}
-	
 	
 	private void register(){
 		Put("Please input the user name");

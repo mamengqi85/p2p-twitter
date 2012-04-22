@@ -18,7 +18,7 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.apache.commons.codec.binary.Hex;
+//import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import BasicTypes.Node;

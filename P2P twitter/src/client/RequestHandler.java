@@ -24,10 +24,8 @@ public class RequestHandler implements Runnable{
 	RequestMessage rm;
 	ConsoleClient client;
 	
-	
-	public RequestHandler(RequestMessage rm,ConsoleClient client) {
+	public RequestHandler(RequestMessage rm, ConsoleClient client) {
 		this.rm = rm;
-		this.client = client;
 		if(socket == null){
 			try {
 				socket = new Socket(SERVERIP,SERVERPORT);
@@ -49,9 +47,7 @@ public class RequestHandler implements Runnable{
 			ObjectOutputStream oss = new ObjectOutputStream(socket.getOutputStream());
 			oss.writeObject(rm);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			client.callBack((ResponseMessage)ois.readObject());
-			oss.close();
-			ois.close();
+			ois.readObject();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
