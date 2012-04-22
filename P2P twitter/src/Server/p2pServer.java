@@ -14,12 +14,11 @@ import Server.ServerRequestHandler;
 public class p2pServer implements Runnable{
 	
 	private final int PORT = 5412;
-
 	boolean stop = false;
 	ServerSocket ServerSocket;
-	//TODO: remove?
-	ArrayList<User> userlist;
-	ServerTable tables = new ServerTable();
+	ServerTable tables;
+	
+	
 	
     public static void main(String args[]) {
 		p2pServer server = new p2pServer();
@@ -31,7 +30,8 @@ public class p2pServer implements Runnable{
 	}
 	
 	public p2pServer(){
-		userlist = new ArrayList<User>();
+		ServerConfig sc = ServerConfig.getInstance();
+		
 		if(ServerSocket == null){
 			try {
 				ServerSocket = new ServerSocket(PORT);

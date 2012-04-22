@@ -9,10 +9,10 @@ import java.io.ObjectOutputStream;
 
 public class ServerConfig {
 	//FileOutputStream fos = new FileOutputStream();
-	 static int USERID;
-	 static int GROUPID;
+	 int USERID;
+	 int GROUPID;
      static ServerConfig server;
-	 
+	 ServerTable tables;
 	 
 	
 	private ServerConfig(){
@@ -21,6 +21,7 @@ public class ServerConfig {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			USERID = ois.readInt();
 			GROUPID = ois.readInt();
+			tables = (ServerTable)ois.readObject();
 			ois.close();
 		} catch (FileNotFoundException e) {
 			try {
@@ -30,6 +31,7 @@ public class ServerConfig {
 				GROUPID = 0;
 				oos.writeInt(USERID);
 				oos.writeInt(GROUPID);
+				oos.writeObject(tables);
 				oos.close();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -43,6 +45,9 @@ public class ServerConfig {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -52,6 +57,12 @@ public class ServerConfig {
 		}
 		return server;
 	}
+	
+	
+	public ServerTable getTables(){
+		return tables;
+	}
+	
 	
 	public int getUSERID(){
 		return USERID++;
@@ -68,6 +79,7 @@ public class ServerConfig {
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeInt(USERID);
 			oos.writeInt(GROUPID);
+			oos.writeObject(tables);
 			oos.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

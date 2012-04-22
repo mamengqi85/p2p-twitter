@@ -10,11 +10,23 @@ import java.util.Random;
 import BasicTypes.Group;
 import BasicTypes.User;
 import BasicTypes.Node;
+import BasicTypes.UserInfo;
 
 public class ServerTable {
-	HashMap<String, User> userlist;
+	HashMap<String, UserInfo> userlist;
 	HashMap<String, User> availableList;
 	HashMap<Integer, Group> GroupIDList;
+	
+	public boolean addUser(UserInfo user){
+		if(!userlist.containsKey(user.UserID)){
+			userlist.put(user.UserID, user);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
 	
 	//availableList should not be empty
 	public Node SelectRandomNode() {
@@ -36,4 +48,7 @@ public class ServerTable {
 		User user = availableList.get(key);
 		return user.getNode(); 
 	}
+	
+	
+	
 }

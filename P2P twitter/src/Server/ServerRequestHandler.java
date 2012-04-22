@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import BasicTypes.Node;
 import BasicTypes.User;
+import BasicTypes.UserInfo;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 import RPC.ResponseMessage;
@@ -20,7 +21,10 @@ public class ServerRequestHandler implements Runnable{
 		this.tables = tables;
 	}
 	
-	boolean register(User user){
+	boolean register(UserInfo user){
+		if (tables.addUser(user)) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -39,6 +43,12 @@ public class ServerRequestHandler implements Runnable{
 			resM.opeID = rm.opeID;
 			if(rm.opeID.equals(RPCConstants.REGISTER)){
 				System.out.println("REGISTER");
+				UserInfo userinfo = new UserInfo(rm.parm);
+				if(register(userinfo)){
+					resM.result = RPCConstants.SUCCESS;
+				}else{
+					resM.result = RPCConstants.FAIL;
+				}
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 				System.out.println("LOGIN");
 			} else if (rm.opeID.equals(RPCConstants.JOIN)){

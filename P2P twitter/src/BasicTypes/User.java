@@ -2,24 +2,20 @@ package BasicTypes;
 
 import java.util.StringTokenizer;
 
+
 public class User {
-	String UserID;
-	String password;
+	UserInfo basicInfo;
 	Node node;
 	
 	public User(){
-		UserID = "INITIAL";
-		password = "INITIAL";
+		basicInfo = new UserInfo();
+		node = new Node();
 	}
 	
 	public User(String uid, String pwd, Node node){
-		this.UserID = uid;
-		this.password = pwd;
+		basicInfo.UserID = uid;
+		basicInfo.password = pwd;
 		this.node = node;
-	}
-	
-	public String getString(){
-		return UserID + "#" + password + "#"; 
 	}
 	
 	public Node getNode() {
@@ -30,10 +26,6 @@ public class User {
 		this.node = node;
 	}
 	
-	public User(String str){
-		StringTokenizer st = new StringTokenizer("#");
-		UserID = st.nextToken();
-		password = st.nextToken();
-	}
+
 }
 
