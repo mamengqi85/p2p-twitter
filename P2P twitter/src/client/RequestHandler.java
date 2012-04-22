@@ -16,16 +16,16 @@ import RPC.ResponseMessage;
 
 public class RequestHandler implements Runnable{
 
-	//TODO: Y here?
-	static Socket socket;
+	Socket socket;
 	static String SERVERIP = "localhost";
-	static int SERVERPORT = 5412;
+	int SERVERPORT = 5412;
 	
 	RequestMessage rm;
 	ConsoleClient client;
 	
 	public RequestHandler(RequestMessage rm, ConsoleClient client) {
 		this.rm = rm;
+		this.client = client;
 		if(socket == null){
 			try {
 				socket = new Socket(SERVERIP,SERVERPORT);
@@ -47,7 +47,7 @@ public class RequestHandler implements Runnable{
 			ObjectOutputStream oss = new ObjectOutputStream(socket.getOutputStream());
 			oss.writeObject(rm);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			ois.readObject();
+			client.callBack((ResponseMessage)ois.readObject());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

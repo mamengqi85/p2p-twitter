@@ -21,7 +21,7 @@ public class UserInfo {
 	}
 	
 	public UserInfo(String str){
-		StringTokenizer st = new StringTokenizer("#");
+		StringTokenizer st = new StringTokenizer(str,"#");
 		UserID = st.nextToken();
 		password = st.nextToken();
 	}

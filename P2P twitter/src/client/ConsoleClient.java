@@ -61,7 +61,8 @@ public class ConsoleClient implements Runnable{
 	}
 	
 	public ResponseMessage callBack(ResponseMessage rm){
-			System.out.println("recieved response: " + rm.opeID);
+		System.out.println("recieved response: " + rm.opeID);
+		System.out.println(rm.result);
 		if(rm.opeID.equals(RPCConstants.REGISTER)){
 			
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){

@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import BasicTypes.User;
 import BasicTypes.Node;
 import BasicTypes.UserInfo;
 
-public class ServerTable {
+public class ServerTable implements Serializable{
 	HashMap<String, UserInfo> userlist;
 	HashMap<String, User> availableList;
 	HashMap<Integer, Group> GroupIDList;
@@ -25,6 +26,12 @@ public class ServerTable {
 		return false;
 	}
 	
+	
+	public ServerTable(){
+		userlist = new HashMap<String, UserInfo>();
+		availableList = new HashMap<String, User>();
+		GroupIDList = new HashMap<Integer, Group>();
+	}
 	
 	
 	

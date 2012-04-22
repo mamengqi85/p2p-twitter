@@ -29,6 +29,7 @@ public class ServerConfig {
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				USERID = 0;
 				GROUPID = 0;
+				tables = new ServerTable();
 				oos.writeInt(USERID);
 				oos.writeInt(GROUPID);
 				oos.writeObject(tables);
@@ -39,9 +40,6 @@ public class ServerConfig {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
-			
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
