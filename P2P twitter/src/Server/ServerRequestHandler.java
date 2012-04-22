@@ -28,9 +28,6 @@ public class ServerRequestHandler implements Runnable{
 		return false;
 	}
 	
-	
-	
-	
 	@Override
 	public void run() {
 		try {
@@ -54,10 +51,10 @@ public class ServerRequestHandler implements Runnable{
 			} else if (rm.opeID.equals(RPCConstants.JOIN)){
 				System.out.println("JOIN");
 				if (tables.availableList.size() == 0) {
-					//TODO: construct response to create table
+					resM.result = "true";
 				} else {
 					Node bootstrapNode = tables.SelectRandomNode();
-					//TODO: construct response to join table
+					resM.result = "false#" + bootstrapNode.ip + "#" + bootstrapNode.port;
 				}
 			} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 				System.out.println("RETRIEVE");
@@ -72,13 +69,5 @@ public class ServerRequestHandler implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
-	
-	
-	
-	
-	
-	
 }
