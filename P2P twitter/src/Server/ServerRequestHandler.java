@@ -28,6 +28,17 @@ public class ServerRequestHandler implements Runnable{
 		return false;
 	}
 	
+	
+	boolean login(User user){
+		if(tables.checkUser(user.getBasicInfo())){
+			if(tables.addAvailUser(user)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	@Override
 	public void run() {
 		try {
@@ -47,6 +58,7 @@ public class ServerRequestHandler implements Runnable{
 					resM.result = RPCConstants.FAIL;
 				}
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
+				
 				System.out.println("LOGIN");
 			} else if (rm.opeID.equals(RPCConstants.JOIN)){
 				System.out.println("JOIN");

@@ -26,6 +26,24 @@ public class ServerTable implements Serializable{
 		return false;
 	}
 	
+	public boolean checkUser(UserInfo user){
+		if(userlist.containsKey(user.UserID)){
+			UserInfo userinfo = userlist.get(user.UserID);
+			if(userinfo.password == user.password){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean addAvailUser(User user){
+		if(!availableList.containsKey(user.getBasicInfo().UserID)){
+			availableList.put(user.getBasicInfo().UserID, user);
+			return true;
+		}
+		return false;
+	}
+	
 	
 	public ServerTable(){
 		userlist = new HashMap<String, UserInfo>();

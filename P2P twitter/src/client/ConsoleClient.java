@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.StringTokenizer;
 
+import BasicTypes.Node;
 import BasicTypes.User;
 import BasicTypes.UserInfo;
 import DHT.ChordDHT;
@@ -59,8 +60,11 @@ public class ConsoleClient implements Runnable{
 		Put("Please unput the password");
 		String password = Gets();
 		Put("Login seccuss!");
+		User user = new User(username,password,new Node());
 		RequestMessage reqM = new RequestMessage();
 		reqM.opeID = RPCConstants.LOGIN;
+		reqM.parm = user.getString();
+		sendRequest(reqM);
 		return true;
 	}
 	
