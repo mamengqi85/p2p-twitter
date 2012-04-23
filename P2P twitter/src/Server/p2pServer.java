@@ -30,8 +30,11 @@ public class p2pServer implements Runnable{
 		BufferedReader bReader = new BufferedReader(stdin);
 		try {
 			while(!bReader.readLine().equals("stop")){
-				server.stop();
+				System.out.println("Input command again");
 			}
+			server.stop();
+			System.out.println("Server Stoped");
+			return;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			server.stop();
@@ -64,12 +67,14 @@ public class p2pServer implements Runnable{
 		while(!stop){
 			try {
 				System.out.println("Server Started");
+				ServerSocket.setSoTimeout(60000);
 				Socket socket = ServerSocket.accept();
 				ServerRequestHandler sHandler = new ServerRequestHandler(socket, tables);
 				Thread t = new Thread(sHandler);
-				t.run();
+				t.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}		
 		}

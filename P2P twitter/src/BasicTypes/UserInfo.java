@@ -1,8 +1,9 @@
 package BasicTypes;
 
+import java.io.Serializable;
 import java.util.StringTokenizer;
 
-public class UserInfo {
+public class UserInfo implements Serializable{
 	public String UserID;
 	public String password;
 	

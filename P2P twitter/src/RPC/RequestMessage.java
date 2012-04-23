@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.rmi.server.UID;
 import java.util.StringTokenizer;
 
+import BasicTypes.Node;
 import RPC.RPCConstants.REQUEST;
 
 
@@ -12,6 +13,7 @@ public class RequestMessage implements Serializable{
 	public String callID;
 	public String opeID;
 	public String parm;
+	//for the convience
 	//public CookieType cookie;
 	//public long discardTime;
 	

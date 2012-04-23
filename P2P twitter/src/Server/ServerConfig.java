@@ -25,7 +25,8 @@ public class ServerConfig {
 			ois.close();
 		} catch (FileNotFoundException e) {
 			try {
-				FileOutputStream fos = new FileOutputStream("Server.congfig");
+				//e.printStackTrace();
+				FileOutputStream fos = new FileOutputStream("Server.config");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				USERID = 0;
 				GROUPID = 0;
@@ -73,7 +74,7 @@ public class ServerConfig {
 	public void close(){
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("Server.congfig");	
+			fos = new FileOutputStream("Server.config");	
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeInt(USERID);
 			oos.writeInt(GROUPID);

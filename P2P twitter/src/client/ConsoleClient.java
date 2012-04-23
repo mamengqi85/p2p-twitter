@@ -59,7 +59,8 @@ public class ConsoleClient implements Runnable{
 		Put("Please unput the password");
 		String password = Gets();
 		Put("Login seccuss!");
-		
+		RequestMessage reqM = new RequestMessage();
+		reqM.opeID = RPCConstants.LOGIN;
 		return true;
 	}
 	
@@ -93,7 +94,7 @@ public class ConsoleClient implements Runnable{
 	private void sendRequest(RequestMessage rm){
 		RequestHandler rh = new RequestHandler(rm, this);
 		Thread t = new Thread(rh);
-		t.run();
+		t.start();
 	}
 	
 	private void register(){
@@ -115,6 +116,8 @@ public class ConsoleClient implements Runnable{
 	private void joinGroup(){
 		
 	}
+	
+
 	
 	private String Gets(){
 		try {
