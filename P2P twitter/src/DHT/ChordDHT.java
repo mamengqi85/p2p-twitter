@@ -52,10 +52,20 @@ public class ChordDHT {
 		try {
 			chord.join (localURL, bootstrapURL);
 		} catch (ServiceException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Could not join DHT!", e);
 		}
 		
 		return chord;
+	}
+	
+	public void leave(Chord chord) {
+		try {
+			chord.leave();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Could not join DHT!", e);
+		}
 	}
 	
 	public void insertKey(Chord chord, StringKey myKey, String data) {

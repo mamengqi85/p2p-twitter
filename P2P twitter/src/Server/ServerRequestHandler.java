@@ -28,7 +28,6 @@ public class ServerRequestHandler implements Runnable{
 		return false;
 	}
 	
-	
 	boolean login(User user){
 		if(tables.checkUser(user.getBasicInfo())){
 			if(tables.addAvailUser(user)){
@@ -37,7 +36,6 @@ public class ServerRequestHandler implements Runnable{
 		}
 		return false;
 	}
-	
 	
 	@Override
 	public void run() {
@@ -60,14 +58,19 @@ public class ServerRequestHandler implements Runnable{
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 				
 				System.out.println("LOGIN");
-			} else if (rm.opeID.equals(RPCConstants.JOIN)){
-				System.out.println("JOIN");
-				if (tables.availableList.size() == 0) {
-					resM.result = "true";
+				User user = new User(rm.parm);
+				if (login(user)) {
+					resM.result = RPCConstants.SUCCESS;
+					if (tables.availableList.size() == 0)
+						resM.result += "#" + RPCConstants.CREATE;
+					else {
+						Node bootstrapNode = tables.SelectRandomNode();
+						resM.result += "#" + RPCConstants.JOIN + "#" + bootstrapNode.ip + "#" + bootstrapNode.port;
+					}
 				} else {
-					Node bootstrapNode = tables.SelectRandomNode();
-					resM.result = "false#" + bootstrapNode.ip + "#" + bootstrapNode.port;
+					resM.result = RPCConstants.FAIL;
 				}
+				
 			} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 				System.out.println("RETRIEVE");
 			} else {

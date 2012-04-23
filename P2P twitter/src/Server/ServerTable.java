@@ -44,7 +44,6 @@ public class ServerTable implements Serializable{
 		return false;
 	}
 	
-	
 	public ServerTable(){
 		userlist = new HashMap<String, UserInfo>();
 		availableList = new HashMap<String, User>();

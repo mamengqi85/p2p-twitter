@@ -31,14 +31,8 @@ public class ConsoleClient implements Runnable{
 	public ConsoleClient(){
 		InputStreamReader stdin = new  InputStreamReader(System.in);
 		bReader = new BufferedReader(stdin);
-		try {
-		    InetAddress addr = InetAddress.getLocalHost();
-		    byte[] ipAddr = addr.getAddress();
-		    ip = ipAddr[0] + "." + ipAddr[1] + "." + ipAddr[2] + "." + ipAddr[3];
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		this.port = "12345";
+		ip = Utility.getIP();
+		port = Utility.getPort();
 	}
 	
 	public static void main(String args[]){
@@ -54,7 +48,7 @@ public class ConsoleClient implements Runnable{
 		Put("===================================================");
 	}
 	
-	private boolean login(){
+	private void login(){
 		Put("Please input the user name");
 		String username = Gets();
 		Put("Please unput the password");
@@ -65,28 +59,39 @@ public class ConsoleClient implements Runnable{
 		reqM.opeID = RPCConstants.LOGIN;
 		reqM.parm = user.getString();
 		sendRequest(reqM);
-		return true;
 	}
-	
+
 	public ResponseMessage callBack(ResponseMessage rm){
 		System.out.println("recieved response: " + rm.opeID);
 		System.out.println(rm.result);
 		if(rm.opeID.equals(RPCConstants.REGISTER)){
 			
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
-			
-		} else if (rm.opeID.equals(RPCConstants.JOIN)){
 			//parse result
 			StringTokenizer st = new StringTokenizer(rm.result,"#");
-			String isExisted = st.nextToken();
+			st.nextToken();
+			String nextAction = st.nextToken();
+			boolean isExisted = false;
+			if (nextAction == RPCConstants.LOGIN)
+				isExisted = true;
 			ChordDHT dht = new ChordDHT();
-			if (Utility.StrToBool(isExisted)) {
-				chord = dht.create(ip, port);
-			} else {
+			if (isExisted) {
 				String destIp = st.nextToken();
 				String destPort = st.nextToken();
 				chord = dht.join(destIp, destPort, ip, port);
+				RequestMessage rqsM = new RequestMessage();
+				rqsM.callID = rm.callID;
+				rqsM.opeID = RPCConstants.JOIN;
+			} else {
+				chord = dht.create(ip, port);
+				RequestMessage rqsM = new RequestMessage();
+				rqsM.callID = rm.callID;
+				rqsM.opeID = RPCConstants.CREATE;
 			}
+		} else if (rm.opeID.equals(RPCConstants.CREATE)){
+			
+		} else if (rm.opeID.equals(RPCConstants.JOIN)){
+			
 		} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 			
 		} else {
@@ -170,6 +175,9 @@ public class ConsoleClient implements Runnable{
 				break;
 			case REGISTER:
 				register();
+				break;
+			case LOGIN:
+				login();
 				break;
 			default:
 				break;
