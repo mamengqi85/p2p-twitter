@@ -11,6 +11,7 @@ import BasicTypes.Node;
 import BasicTypes.User;
 import BasicTypes.UserInfo;
 import DHT.ChordDHT;
+import DHT.StringKey;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 import RPC.ResponseMessage;
@@ -27,6 +28,7 @@ public class ConsoleClient implements Runnable{
 	  private String ip;
 	  private String port;
 	  private Chord chord;
+	  private ChordDHT dht;
 	
 	public ConsoleClient(){
 		InputStreamReader stdin = new  InputStreamReader(System.in);
@@ -53,14 +55,51 @@ public class ConsoleClient implements Runnable{
 		String username = Gets();
 		Put("Please unput the password");
 		String password = Gets();
-		Put("Login seccuss!");
+		//Put("Login seccuss!");
 		User user = new User(username,password,new Node());
 		RequestMessage reqM = new RequestMessage();
 		reqM.opeID = RPCConstants.LOGIN;
 		reqM.parm = user.getString();
 		sendRequest(reqM);
 	}
+	
+	private void add() {
+		if (dht == null) {
+			System.out.println("Haven't login.");
+			return;
+		}
+		Put("Please input the key to add");
+		String key = Gets();
+		StringKey myKey = new StringKey(key);
+		Put("Please input the value to add associate with this key");
+		String value = Gets();
+		dht.insertKey(chord, myKey, value);
+	}
 
+	private void remove() {
+		if (dht == null) {
+			System.out.println("Haven't login.");
+			return;
+		}
+		Put("Please input the key to remove");
+		String key = Gets();
+		StringKey myKey = new StringKey(key);
+		Put("Please input the value to remove associate with this key");
+		String value = Gets();
+		dht.removeKey(chord, myKey, value);
+	}
+	
+	private void retrieve() {
+		if (dht == null) {
+			System.out.println("Haven't login.");
+			return;
+		}
+		Put("Please input the key to retrieve");
+		String key = Gets();
+		StringKey myKey = new StringKey(key);
+		dht.retrieveKey(chord, myKey);
+	}
+	
 	public ResponseMessage callBack(ResponseMessage rm){
 		System.out.println("recieved response: " + rm.opeID);
 		System.out.println(rm.result);
@@ -74,7 +113,7 @@ public class ConsoleClient implements Runnable{
 			boolean isExisted = false;
 			if (nextAction == RPCConstants.LOGIN)
 				isExisted = true;
-			ChordDHT dht = new ChordDHT();
+			dht = new ChordDHT();
 			if (isExisted) {
 				String nodeStr = st.nextToken();
 				Node node = new Node(nodeStr);
@@ -144,8 +183,6 @@ public class ConsoleClient implements Runnable{
 	public void Put(String str){
 		System.out.println( str);
 	}
-
-	
 	
 	
 	COMMAND ParseCommand(String str){
@@ -155,6 +192,10 @@ public class ConsoleClient implements Runnable{
 			return COMMAND.REGISTER;
 		}else if(str.toLowerCase().equals("rt")){
 			return COMMAND.RETRIEVE;
+		} else if (str.toLowerCase().equals("a")) {
+			return COMMAND.ADD;
+		} else if (str.toLowerCase().equals("rm")) {
+			return COMMAND.REMOVE;
 		}else{
 			return COMMAND.INVALID;
 		}
@@ -174,12 +215,19 @@ public class ConsoleClient implements Runnable{
 			//ClientConstants.
 			switch (ParseCommand(commandString)) {
 			case RETRIEVE:
+				retrieve();
 				break;
 			case REGISTER:
 				register();
 				break;
 			case LOGIN:
 				login();
+				break;
+			case ADD:
+				add();
+				break;
+			case REMOVE:
+				remove();
 				break;
 			default:
 				break;
