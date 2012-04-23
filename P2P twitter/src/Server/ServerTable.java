@@ -72,7 +72,4 @@ public class ServerTable implements Serializable{
 		User user = availableList.get(key);
 		return user.getNode(); 
 	}
-	
-	
-	
 }

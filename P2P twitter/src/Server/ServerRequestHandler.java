@@ -62,10 +62,10 @@ public class ServerRequestHandler implements Runnable{
 				if (login(user)) {
 					resM.result = RPCConstants.SUCCESS;
 					if (tables.availableList.size() == 0)
-						resM.result += "#" + RPCConstants.CREATE;
+						resM.result += "~" + RPCConstants.CREATE;
 					else {
 						Node bootstrapNode = tables.SelectRandomNode();
-						resM.result += "#" + RPCConstants.JOIN + "#" + bootstrapNode.ip + "#" + bootstrapNode.port;
+						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString();
 					}
 				} else {
 					resM.result = RPCConstants.FAIL;

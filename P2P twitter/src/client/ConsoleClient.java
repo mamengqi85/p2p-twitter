@@ -68,7 +68,7 @@ public class ConsoleClient implements Runnable{
 			
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 			//parse result
-			StringTokenizer st = new StringTokenizer(rm.result,"#");
+			StringTokenizer st = new StringTokenizer(rm.result,"~");
 			st.nextToken();
 			String nextAction = st.nextToken();
 			boolean isExisted = false;
@@ -76,8 +76,10 @@ public class ConsoleClient implements Runnable{
 				isExisted = true;
 			ChordDHT dht = new ChordDHT();
 			if (isExisted) {
-				String destIp = st.nextToken();
-				String destPort = st.nextToken();
+				String nodeStr = st.nextToken();
+				Node node = new Node(nodeStr);
+				String destIp = node.ip.getHostAddress();
+				String destPort = Integer.toString(node.port);
 				chord = dht.join(destIp, destPort, ip, port);
 				RequestMessage rqsM = new RequestMessage();
 				rqsM.callID = rm.callID;

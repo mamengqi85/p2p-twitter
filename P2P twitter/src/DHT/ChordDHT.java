@@ -30,6 +30,54 @@ public class ChordDHT {
 		return chord;
 	}
 	
+	public Chord create(String port) {
+		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile ();
+		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
+		URL url = null;
+		try {
+			url = new URL(protocol + "://localhost:" + port + "/");
+		} catch ( MalformedURLException e) {
+				System.out.println(e.getLocalizedMessage());
+				throw new RuntimeException(e);
+		}
+		Chord chord = new de.uniba.wiai.lspi.chord.service.impl.ChordImpl();
+		try {
+			chord.create(url);
+		} catch (ServiceException e) {
+			throw new RuntimeException ("Could not create DHT !", e);
+		}
+		
+		return chord;
+	}
+	
+	public Chord join(String destPort, String localPort) {
+		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
+		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
+		URL localURL = null;
+		try {
+			localURL = new URL (protocol + "://localhost:" + localPort + "/");
+		} catch (MalformedURLException e){
+			throw new RuntimeException(e);
+		}
+		URL bootstrapURL = null;
+		try {
+			bootstrapURL = new URL (protocol + "://localhost:" + destPort + "/");
+			//bootstrapURL = new URL(protocol + "://" + destIp + ":" + destPort + "/");
+		} catch ( MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+		//Chord chord = new de.uniba.wiai.lspi.chord.service.impl.ChordImpl();
+		Chord chord = new de.uniba.wiai.lspi.chord.service.impl.ChordImpl();
+		try {
+			chord.join (localURL, bootstrapURL);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Could not join DHT!", e);
+		}
+		
+		return chord;
+	}
+	
 	public Chord join(String destIp, String destPort, String localIp, String localPort) {
 		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
@@ -63,8 +111,8 @@ public class ChordDHT {
 		try {
 			chord.leave();
 		} catch (ServiceException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Could not join DHT!", e);
+			//e.printStackTrace();
+			throw new RuntimeException("Could not leave DHT!", e);
 		}
 	}
 	
