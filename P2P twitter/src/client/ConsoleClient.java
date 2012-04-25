@@ -57,7 +57,7 @@ public class ConsoleClient implements Runnable{
 		String password = Gets();
 		//Put("Login seccuss!");
 		Node node = new Node();
-		ip = node.ip.toString();
+		ip = node.ip.getHostAddress();
 		System.out.println("logingip"+ip);
 		port = Integer.toString(node.port);
 		System.out.println("logingport"+port);
