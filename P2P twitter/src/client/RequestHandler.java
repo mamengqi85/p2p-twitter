@@ -21,9 +21,11 @@ public class RequestHandler implements Runnable{
 	int SERVERPORT = 5412;
 	
 	RequestMessage rm;
-	ClientController client;
+	//ClientController client;
+	ConsoleClient client;
 	
-	public RequestHandler(RequestMessage rm, ClientController client) {
+	//public RequestHandler(RequestMessage rm, ClientController client) {
+	public RequestHandler(RequestMessage rm, ConsoleClient client) {
 		this.rm = rm;
 		this.client = client;
 		if(socket == null){
