@@ -31,7 +31,13 @@ public class Utility {
 	
 	public static final String getPort() {
 		Socket getter = new Socket();
-		int port_i = getter.getPort();
+		try {
+			getter.bind(null);
+		} catch (IOException e1) {
+			System.out.println("Failed to bind a socket.");
+			e1.printStackTrace();
+		}
+		int port_i = getter.getLocalPort();
 		try {
 			getter.close();
 		} catch (IOException e) {

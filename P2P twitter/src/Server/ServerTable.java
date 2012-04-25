@@ -27,9 +27,15 @@ public class ServerTable implements Serializable{
 	}
 	
 	public boolean checkUser(UserInfo user){
+		System.out.println("!!!!!!");
 		if(userlist.containsKey(user.UserID)){
+			System.out.println("????????");
 			UserInfo userinfo = userlist.get(user.UserID);
-			if(userinfo.password == user.password){
+			System.out.println("ppp" + userinfo.UserID);
+			System.out.println("ppp" + userinfo.password);
+			System.out.println("ppp" + user.password);
+			if(userinfo.password.equals(user.password)){
+				System.out.println(".........");
 				return true;
 			}
 		}

@@ -34,6 +34,7 @@ public class User {
 	
 	
 	public User(String uid, String pwd, Node node){
+		basicInfo = new UserInfo();
 		basicInfo.UserID = uid;
 		basicInfo.password = pwd;
 		this.node = node;

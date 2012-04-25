@@ -108,26 +108,27 @@ public class ConsoleClient implements Runnable{
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 			//parse result
 			StringTokenizer st = new StringTokenizer(rm.result,"~");
-			st.nextToken();
-			String nextAction = st.nextToken();
-			boolean isExisted = false;
-			if (nextAction == RPCConstants.LOGIN)
-				isExisted = true;
-			dht = new ChordDHT();
-			if (isExisted) {
-				String nodeStr = st.nextToken();
-				Node node = new Node(nodeStr);
-				String destIp = node.ip.getHostAddress();
-				String destPort = Integer.toString(node.port);
-				chord = dht.join(destIp, destPort, ip, port);
-				RequestMessage rqsM = new RequestMessage();
-				rqsM.callID = rm.callID;
-				rqsM.opeID = RPCConstants.JOIN;
-			} else {
-				chord = dht.create(ip, port);
-				RequestMessage rqsM = new RequestMessage();
-				rqsM.callID = rm.callID;
-				rqsM.opeID = RPCConstants.CREATE;
+			if (Utility.StrToBool(st.nextToken())) {
+				String nextAction = st.nextToken();
+				boolean isExisted = false;
+				if (nextAction == RPCConstants.LOGIN)
+					isExisted = true;
+				dht = new ChordDHT();
+				if (isExisted) {
+					String nodeStr = st.nextToken();
+					Node node = new Node(nodeStr);
+					String destIp = node.ip.getHostAddress();
+					String destPort = Integer.toString(node.port);
+					chord = dht.join(destIp, destPort, ip, port);
+					RequestMessage rqsM = new RequestMessage();
+					rqsM.callID = rm.callID;
+					rqsM.opeID = RPCConstants.JOIN;
+				} else {
+					chord = dht.create(ip, port);
+					RequestMessage rqsM = new RequestMessage();
+					rqsM.callID = rm.callID;
+					rqsM.opeID = RPCConstants.CREATE;
+				}
 			}
 		} else if (rm.opeID.equals(RPCConstants.CREATE)){
 			

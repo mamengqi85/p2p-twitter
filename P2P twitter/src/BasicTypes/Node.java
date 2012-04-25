@@ -17,7 +17,7 @@ public class Node implements Serializable{
 	public Node(){
 		try {
 			ip = InetAddress.getLocalHost();
-			port = Integer.getInteger(Utility.getPort());
+			port = Integer.parseInt(Utility.getPort());
 			pk = SerilizeKey.ReadPublicKey();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -37,7 +37,7 @@ public class Node implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			port = Integer.getInteger(st.nextToken());
+			port = Integer.parseInt(st.nextToken());
 			pk = SerilizeKey.ReadPublicKey();
 	}
 	
