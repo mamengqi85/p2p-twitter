@@ -20,8 +20,6 @@ import Utility.Utility;
 import client.ClientConstants.COMMAND;
 import de.uniba.wiai.lspi.chord.service.Chord;
 
-import sun.util.logging.resources.logging;
-
 public class ConsoleClient implements Runnable{
 	  private BufferedReader bReader;
 	  private boolean stop = false;

@@ -3,24 +3,8 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.StringTokenizer;
-
-import BasicTypes.Node;
-import BasicTypes.User;
-import BasicTypes.UserInfo;
-import DHT.ChordDHT;
-import DHT.StringKey;
-import RPC.RPCConstants;
-import RPC.RequestMessage;
-import RPC.ResponseMessage;
-import Utility.Utility;
-
 import client.ClientConstants.COMMAND;
-import de.uniba.wiai.lspi.chord.service.Chord;
 
-import sun.util.logging.resources.logging;
 
 public class ConsoleView implements Runnable{
 	  private BufferedReader bReader;

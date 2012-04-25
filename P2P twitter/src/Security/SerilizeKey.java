@@ -22,11 +22,6 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 
-import sun.print.PeekGraphics;
-
-
-
-import com.sun.corba.se.spi.ior.Writeable;
 
 public class SerilizeKey {
     

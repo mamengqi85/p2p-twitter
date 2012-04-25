@@ -22,10 +22,10 @@ public class RequestHandler implements Runnable{
 	
 	RequestMessage rm;
 	//ClientController client;
-	ConsoleClient client;
+	ClientController client;
 	
 	//public RequestHandler(RequestMessage rm, ClientController client) {
-	public RequestHandler(RequestMessage rm, ConsoleClient client) {
+	public RequestHandler(RequestMessage rm, ClientController client) {
 		this.rm = rm;
 		this.client = client;
 		if(socket == null){

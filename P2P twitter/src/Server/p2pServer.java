@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import BasicTypes.User;
@@ -36,7 +38,6 @@ public class p2pServer implements Runnable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			server.stop();
-			e.printStackTrace();
 		}
 
 	}
@@ -70,9 +71,13 @@ public class p2pServer implements Runnable{
 				ServerRequestHandler sHandler = new ServerRequestHandler(socket, tables);
 				Thread t = new Thread(sHandler);
 				t.start();
+			} catch(SocketTimeoutException e){
+				System.out.println("accept timeout");
+			} catch (SocketException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				
 				e.printStackTrace();
 			}
 		}
