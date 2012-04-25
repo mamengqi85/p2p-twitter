@@ -20,8 +20,6 @@ public class p2pServer implements Runnable{
 	ServerSocket ServerSocket;
 	ServerTable tables;
 	
-	
-	
     public static void main(String args[]) {
 		p2pServer server = new p2pServer();
 		Thread t = new Thread(server);

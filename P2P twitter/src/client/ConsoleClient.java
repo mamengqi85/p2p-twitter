@@ -33,8 +33,8 @@ public class ConsoleClient implements Runnable{
 	public ConsoleClient(){
 		InputStreamReader stdin = new  InputStreamReader(System.in);
 		bReader = new BufferedReader(stdin);
-		ip = Utility.getIP();
-		port = Utility.getPort();
+		//ip = Utility.getIP();
+		//port = Utility.getPort();
 	}
 	
 	public static void main(String args[]){
@@ -56,7 +56,12 @@ public class ConsoleClient implements Runnable{
 		Put("Please unput the password");
 		String password = Gets();
 		//Put("Login seccuss!");
-		User user = new User(username,password,new Node());
+		Node node = new Node();
+		ip = node.ip.toString();
+		System.out.println("logingip"+ip);
+		port = Integer.toString(node.port);
+		System.out.println("logingport"+port);
+		User user = new User(username,password,node);
 		RequestMessage reqM = new RequestMessage();
 		reqM.opeID = RPCConstants.LOGIN;
 		reqM.parm = user.getString();
