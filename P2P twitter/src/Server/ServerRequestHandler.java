@@ -61,9 +61,10 @@ public class ServerRequestHandler implements Runnable{
 				User user = new User(rm.parm);
 				if (login(user)) {
 					resM.result = RPCConstants.SUCCESS;
-					if (tables.availableList.size() == 0)
+					if (tables.availableList.size() == 0) {
 						resM.result += "~" + RPCConstants.CREATE;
-					else {
+						tables.addAvailUser(user);
+					} else {
 						Node bootstrapNode = tables.SelectRandomNode();
 						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString();
 						tables.addAvailUser(user);

@@ -112,7 +112,7 @@ public class ConsoleClient implements Runnable{
 			if (Utility.StrToBool(st.nextToken())) {
 				String nextAction = st.nextToken();
 				boolean isExisted = false;
-				if (nextAction == RPCConstants.LOGIN)
+				if (nextAction.equals(RPCConstants.JOIN))
 					isExisted = true;
 				dht = new ChordDHT();
 				if (isExisted) {
@@ -121,6 +121,7 @@ public class ConsoleClient implements Runnable{
 					String destIp = node.ip.getHostAddress();
 					String destPort = Integer.toString(node.port);
 					chord = dht.join(destIp, destPort, ip, port);
+					System.out.println("chord4"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.JOIN;
