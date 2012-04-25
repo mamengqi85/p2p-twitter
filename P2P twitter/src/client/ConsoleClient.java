@@ -103,7 +103,7 @@ public class ConsoleClient implements Runnable{
 		Put("Please input the key to retrieve");
 		String key = Gets();
 		StringKey myKey = new StringKey(key);
-		dht.retrieveKey(chord, myKey);
+		System.out.println(dht.retrieveKey(chord, myKey));
 	}
 	
 	public ResponseMessage callBack(ResponseMessage rm){

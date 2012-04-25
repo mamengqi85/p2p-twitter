@@ -139,6 +139,8 @@ public class ChordDHT {
 	
 	public Set<Serializable> retrieveKey(Chord chord, StringKey myKey) {
 		Set<Serializable> entries;
+		System.out.println("DHTChord"+ chord);
+		System.out.println("DHTChord"+ myKey);
 		try {
 			entries = chord.retrieve(myKey);
 		} catch(ServiceException e) {
