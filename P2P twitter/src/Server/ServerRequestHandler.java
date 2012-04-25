@@ -29,11 +29,8 @@ public class ServerRequestHandler implements Runnable{
 	}
 	
 	boolean login(User user){
-		System.out.println("000000");
 		if(tables.checkUser(user.getBasicInfo())){
-			System.out.println("11111111");
-			if(tables.addAvailUser(user)){
-				System.out.println("22222222");
+			if(tables.checkAvailUser(user)){
 				return true;
 			}
 		}
@@ -69,6 +66,7 @@ public class ServerRequestHandler implements Runnable{
 					else {
 						Node bootstrapNode = tables.SelectRandomNode();
 						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString();
+						tables.addAvailUser(user);
 					}
 				} else {
 					resM.result = RPCConstants.FAIL;

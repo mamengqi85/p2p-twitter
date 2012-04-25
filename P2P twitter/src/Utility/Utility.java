@@ -5,6 +5,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import RPC.RPCConstants;
+
 public class Utility {
 	public static final boolean StrToBool(String str) {
 		boolean ans = false;
@@ -16,6 +18,9 @@ public class Utility {
 			ans = true;
 		else if (str == "false")
 			ans = false;
+		else if (str.equals(RPCConstants.SUCCESS))
+			ans = true;
+		else if (str.equals(RPCConstants.FAIL));
 		return ans;
 	}
 	

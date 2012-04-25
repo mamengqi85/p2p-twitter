@@ -27,15 +27,9 @@ public class ServerTable implements Serializable{
 	}
 	
 	public boolean checkUser(UserInfo user){
-		System.out.println("!!!!!!");
 		if(userlist.containsKey(user.UserID)){
-			System.out.println("????????");
 			UserInfo userinfo = userlist.get(user.UserID);
-			System.out.println("ppp" + userinfo.UserID);
-			System.out.println("ppp" + userinfo.password);
-			System.out.println("ppp" + user.password);
 			if(userinfo.password.equals(user.password)){
-				System.out.println(".........");
 				return true;
 			}
 		}
@@ -45,6 +39,13 @@ public class ServerTable implements Serializable{
 	public boolean addAvailUser(User user){
 		if(!availableList.containsKey(user.getBasicInfo().UserID)){
 			availableList.put(user.getBasicInfo().UserID, user);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkAvailUser(User user){
+		if(!availableList.containsKey(user.getBasicInfo().UserID)){
 			return true;
 		}
 		return false;

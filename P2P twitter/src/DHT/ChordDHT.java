@@ -117,6 +117,9 @@ public class ChordDHT {
 	}
 	
 	public void insertKey(Chord chord, StringKey myKey, String data) {
+		System.out.println(myKey);
+		System.out.println("chord3:"+ chord);
+		System.out.println(data);
 		try {
 			chord.insert(myKey, data);
 		} catch(ServiceException e) {

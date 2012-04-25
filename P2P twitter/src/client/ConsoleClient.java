@@ -73,6 +73,7 @@ public class ConsoleClient implements Runnable{
 		StringKey myKey = new StringKey(key);
 		Put("Please input the value to add associate with this key");
 		String value = Gets();
+		System.out.println("chord2"+ chord);
 		dht.insertKey(chord, myKey, value);
 	}
 
@@ -125,6 +126,7 @@ public class ConsoleClient implements Runnable{
 					rqsM.opeID = RPCConstants.JOIN;
 				} else {
 					chord = dht.create(ip, port);
+					System.out.println("chord1"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.CREATE;

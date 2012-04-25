@@ -52,8 +52,6 @@ public class p2pServer implements Runnable{
 	public p2pServer(){
 		ServerConfig sc = ServerConfig.getInstance();
 		tables = sc.getTables();
-		System.out.println(tables.userlist.get("zhitu").UserID);
-		System.out.println(tables.userlist.get("zhitu").password);
 		if(ServerSocket == null){
 			try {
 				ServerSocket = new ServerSocket(PORT);
