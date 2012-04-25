@@ -64,9 +64,11 @@ public class ServerRequestHandler implements Runnable{
 					if (tables.availableList.size() == 0) {
 						resM.result += "~" + RPCConstants.CREATE;
 						tables.addAvailUser(user);
+						System.out.println("port1"+tables.availableList.get("Zhitu").getNode().port);
 					} else {
 						Node bootstrapNode = tables.SelectRandomNode();
 						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString();
+						System.out.println("port2"+bootstrapNode.port);
 						tables.addAvailUser(user);
 					}
 				} else {

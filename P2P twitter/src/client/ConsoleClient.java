@@ -120,6 +120,10 @@ public class ConsoleClient implements Runnable{
 					Node node = new Node(nodeStr);
 					String destIp = node.ip.getHostAddress();
 					String destPort = Integer.toString(node.port);
+					System.out.println("dip"+destIp);
+					System.out.println("dport"+destPort);
+					System.out.println("ip"+ip);
+					System.out.println("port"+port);
 					chord = dht.join(destIp, destPort, ip, port);
 					System.out.println("chord4"+ chord);
 					RequestMessage rqsM = new RequestMessage();
