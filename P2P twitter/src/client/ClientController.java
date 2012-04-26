@@ -26,6 +26,9 @@ public class ClientController {
 	private String port;
 	private Chord chord;
 	private ChordDHT dht;
+	private String userID;
+	
+	
 	
 	public boolean isDHTempty(){
 		return dht == null;
@@ -53,8 +56,12 @@ public class ClientController {
 	}
 	
 	public void login(String username, String password){
-		//Put("Login seccuss!");
-		User user = new User(username,password,new Node());
+		Node node = new Node();
+		ip = node.ip.getHostAddress();
+		System.out.println("logingip"+ip);
+		port = Integer.toString(node.port);
+		System.out.println("logingport"+port);
+		User user = new User(username,password,node);
 		RequestMessage reqM = new RequestMessage();
 		reqM.opeID = RPCConstants.LOGIN;
 		reqM.parm = user.getString();
@@ -95,16 +102,37 @@ public class ClientController {
 		System.out.println( str);
 	}
 	
-	private void retrieve() {
-		/*
-		if (dht == null) {
+	public boolean retrieve(String key) {
+		if (isDHTempty()) {
 			System.out.println("Haven't login.");
-			return;
+			return false;
 		}
-		Put("Please input the key to retrieve");
-		String key = Gets();
 		StringKey myKey = new StringKey(key);
-		dht.retrieveKey(chord, myKey);*/
+		//dht.retrieveKey(chord, myKey);
+		System.out.println(dht.retrieveKey(chord, myKey));
+		return true;
+	}
+	
+	public boolean createGroup(String groupName){
+		if(isDHTempty()){
+			return false;
+		}
+		RequestMessage reqM = new RequestMessage();
+		reqM.opeID = RPCConstants.CREATEGROUP;
+		reqM.parm = groupName + "~" + userID + "~";
+		sendRequest(reqM);
+		return true;
+	}
+	
+	public boolean joinGroup(String groupName){
+		if(isDHTempty()){
+			return false;
+		}
+		RequestMessage reqM = new RequestMessage();
+		reqM.opeID = RPCConstants.JOINGROUP;
+		reqM.parm = groupName + "~" + userID + "~";
+		sendRequest(reqM);
+		return true;
 	}
 	
 	
@@ -116,10 +144,11 @@ public class ClientController {
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 			//parse result
 			StringTokenizer st = new StringTokenizer(rm.result,"~");
+			userID = st.nextToken();
 			if (Utility.StrToBool(st.nextToken())) {
 				String nextAction = st.nextToken();
 				boolean isExisted = false;
-				if (nextAction == RPCConstants.LOGIN)
+				if (nextAction.equals(RPCConstants.JOIN))
 					isExisted = true;
 				dht = new ChordDHT();
 				if (isExisted) {
@@ -127,12 +156,18 @@ public class ClientController {
 					Node node = new Node(nodeStr);
 					String destIp = node.ip.getHostAddress();
 					String destPort = Integer.toString(node.port);
+					System.out.println("dip"+destIp);
+					System.out.println("dport"+destPort);
+					System.out.println("ip"+ip);
+					System.out.println("port"+port);
 					chord = dht.join(destIp, destPort, ip, port);
+					System.out.println("chord4"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.JOIN;
 				} else {
 					chord = dht.create(ip, port);
+					System.out.println("chord1"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.CREATE;

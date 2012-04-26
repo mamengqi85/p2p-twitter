@@ -5,23 +5,20 @@ import java.util.ArrayList;
 import Server.ServerConfig;
 
 public class Group {
-    ArrayList<Integer> memberlist;
+    ArrayList<String> memberlist;
 	String groupName;
-    int groupID;
 	
 	public Group(String name){
-		// uid = new UID();
-		ServerConfig sc = ServerConfig.getInstance();
-		groupID = sc.getGROUPID();
 		groupName = name;
-		memberlist = new ArrayList<Integer>();
+		memberlist = new ArrayList<String>();
 	}
 	
-	public boolean AddUser(int UserID){
+	public boolean AddUser(String UserID){
 		if(memberlist.contains(UserID)){
 			return false;
 		}else{
 			memberlist.add(UserID);
+			System.out.println(memberlist);
 			return true;
 		}
 	}

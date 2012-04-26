@@ -54,16 +54,6 @@ public class ConsoleClient implements Runnable{
 		Put("Please unput the password");
 		String password = Gets();
 		//Put("Login seccuss!");
-		Node node = new Node();
-		ip = node.ip.getHostAddress();
-		System.out.println("logingip"+ip);
-		port = Integer.toString(node.port);
-		System.out.println("logingport"+port);
-		User user = new User(username,password,node);
-		RequestMessage reqM = new RequestMessage();
-		reqM.opeID = RPCConstants.LOGIN;
-		reqM.parm = user.getString();
-		sendRequest(reqM);
 	}
 	
 	private void add() {
@@ -153,9 +143,9 @@ public class ConsoleClient implements Runnable{
 	}
 	
 	private void sendRequest(RequestMessage rm){
-		RequestHandler rh = new RequestHandler(rm, this);
-		Thread t = new Thread(rh);
-		t.start();
+		//RequestHandler rh = new RequestHandler(rm, this);
+		//Thread t = new Thread(rh);
+		//t.start();
 	}
 	
 	private void register(){

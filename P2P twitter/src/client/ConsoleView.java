@@ -68,11 +68,15 @@ public class ConsoleView implements Runnable{
 	}
 	
 	private void createGroup(){
-		
+		Put("input the Group name");
+		String Groupname = Gets();
+		cc.createGroup(Groupname);
 	}
 	
 	private void joinGroup(){
-		
+		Put("please input the Group name");
+		String name = Gets();
+		cc.joinGroup(name);
 	}
 	
 
@@ -103,10 +107,16 @@ public class ConsoleView implements Runnable{
 			return COMMAND.ADD;
 		} else if (str.toLowerCase().equals("rm")) {
 			return COMMAND.REMOVE;
+		} else if (str.toLowerCase().equals("cg")) {
+			return COMMAND.CREATEGROUP;
+		} else if (str.toLowerCase().equals("jg")) {
+			return COMMAND.JOINGROUP;
 		}else{
 			return COMMAND.INVALID;
 		}
 	}
+	
+	
 	
 	
 	
@@ -123,7 +133,7 @@ public class ConsoleView implements Runnable{
 			//ClientConstants.
 			switch (ParseCommand(commandString)) {
 			case RETRIEVE:
-				//retrieve();
+				retrieve();
 				break;
 			case REGISTER:
 				register();
@@ -137,12 +147,25 @@ public class ConsoleView implements Runnable{
 			case REMOVE:
 				remove();
 				break;
+			case CREATEGROUP:
+				createGroup();
+				break;
+			case JOINGROUP:
+				joinGroup();
+				break;
 			default:
 				break;
 			}
 		}
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	private void retrieve() {
+		Put("Please input the key to retrieve");
+		String key = Gets();
+		cc.retrieve(key);
 	}
 	
 }

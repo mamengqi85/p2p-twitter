@@ -5,6 +5,8 @@ public class RPCConstants{
 	public static String RETRIEVE = "retrieve";
 	public static String REGISTER = "register";
 	public static String CREATE = "create";
+	public static String CREATEGROUP = "creategroup";
+	public static String JOINGROUP = "joingroup";
 	public static String JOIN = "join";
 	public static String INVALID = "invalid";
 	public static String SUCCESS = "success";

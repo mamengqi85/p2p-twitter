@@ -51,7 +51,7 @@ public class ChordDHT {
 	}
 	
 	public Chord join(String destPort, String localPort) {
-		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
+		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
 		URL localURL = null;
 		try {
@@ -79,7 +79,7 @@ public class ChordDHT {
 	}
 	
 	public Chord join(String destIp, String destPort, String localIp, String localPort) {
-		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
+		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
 		URL localURL = null;
 		try {
@@ -117,9 +117,6 @@ public class ChordDHT {
 	}
 	
 	public void insertKey(Chord chord, StringKey myKey, String data) {
-		System.out.println(myKey);
-		System.out.println("chord3:"+ chord);
-		System.out.println(data);
 		try {
 			chord.insert(myKey, data);
 		} catch(ServiceException e) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 import BasicTypes.Node;
 import BasicTypes.User;
@@ -37,6 +38,14 @@ public class ServerRequestHandler implements Runnable{
 		return false;
 	}
 	
+	boolean CreateGroup(String name){
+		return tables.AddGroup(name);
+	}
+	
+	boolean JoinGroup(String Groupname, String userID){
+		return tables.JoinGroup(Groupname, userID);
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -56,37 +65,51 @@ public class ServerRequestHandler implements Runnable{
 					resM.result = RPCConstants.FAIL;
 				}
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
-				
 				System.out.println("LOGIN");
 				User user = new User(rm.parm);
+				resM.result = user.getBasicInfo().UserID + "~";
 				if (login(user)) {
-					resM.result = RPCConstants.SUCCESS;
+					resM.result += RPCConstants.SUCCESS;
 					if (tables.availableList.size() == 0) {
-						resM.result += "~" + RPCConstants.CREATE;
-						//resM.result += "~" + RPCConstants.CREATE + "~" + user.getNode().getString();
+						resM.result += "~" + RPCConstants.CREATE + "~";
 						tables.addAvailUser(user);
-						System.out.println("port1"+Integer.toString(tables.availableList.get("zhitu").getNode().port));
 					} else {
 						Node bootstrapNode = tables.SelectRandomNode();
-						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString();
-//						System.out.println("port2"+bootstrapNode.port);
+						resM.result += "~" + RPCConstants.JOIN + "~" + bootstrapNode.getString() + "~";
 						tables.addAvailUser(user);
 					}
 				} else {
-					resM.result = RPCConstants.FAIL;
+					resM.result += RPCConstants.FAIL + "~";
 				}
 				
 			} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 				System.out.println("RETRIEVE");
-			} else {
+			} else if(rm.opeID.equals(RPCConstants.CREATEGROUP)){
+				StringTokenizer st = new StringTokenizer(rm.parm,"~");
+				String Groupname = st.nextToken();
+				String userID = st.nextToken();
+				if(CreateGroup(Groupname)){
+					JoinGroup(Groupname, userID);
+					resM.result = RPCConstants.SUCCESS;
+				}else{
+					resM.result = RPCConstants.FAIL;
+				}
+			} else if(rm.opeID.equals(RPCConstants.JOINGROUP)){
+				StringTokenizer st = new StringTokenizer(rm.parm,"~");
+				String Groupname = st.nextToken();
+				String userID = st.nextToken();
+				if(JoinGroup(Groupname, userID)){
+					resM.result = RPCConstants.SUCCESS;
+				}else{
+					resM.result = RPCConstants.FAIL;
+				}
+			}else {
 				
 			}
 			oos.writeObject(resM);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

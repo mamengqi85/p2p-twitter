@@ -16,7 +16,7 @@ import BasicTypes.UserInfo;
 public class ServerTable implements Serializable{
 	HashMap<String, UserInfo> userlist;
 	HashMap<String, User> availableList;
-	HashMap<Integer, Group> GroupIDList;
+	HashMap<String, Group> GroupIDList;
 	
 	public boolean addUser(UserInfo user){
 		if(!userlist.containsKey(user.UserID)){
@@ -54,7 +54,24 @@ public class ServerTable implements Serializable{
 	public ServerTable(){
 		userlist = new HashMap<String, UserInfo>();
 		availableList = new HashMap<String, User>();
-		GroupIDList = new HashMap<Integer, Group>();
+		GroupIDList = new HashMap<String, Group>();
+	}
+	
+	public boolean AddGroup(String groupname){
+		if(GroupIDList.containsKey(groupname)){
+			return false;
+		}
+		Group g = new Group(groupname);
+		GroupIDList.put(groupname, g);
+		System.out.println(GroupIDList);
+		return true;
+	}
+	
+	public boolean JoinGroup(String groupname, String userID){
+		if(!GroupIDList.containsKey(groupname)){
+			return false;
+		}
+		return GroupIDList.get(groupname).AddUser(userID);
 	}
 	
 	

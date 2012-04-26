@@ -9,8 +9,8 @@ import java.io.ObjectOutputStream;
 
 public class ServerConfig {
 	//FileOutputStream fos = new FileOutputStream();
-	 int USERID;
-	 int GROUPID;
+	 //int USERID;
+	 //int GROUPID;
      static ServerConfig server;
 	 ServerTable tables;
 	 
@@ -19,8 +19,8 @@ public class ServerConfig {
 		try {
 			FileInputStream fis = new FileInputStream("Server.config");
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			USERID = ois.readInt();
-			GROUPID = ois.readInt();
+			//USERID = ois.readInt();
+			//GROUPID = ois.readInt();
 			tables = (ServerTable)ois.readObject();
 			ois.close();
 		} catch (FileNotFoundException e) {
@@ -28,11 +28,11 @@ public class ServerConfig {
 				//e.printStackTrace();
 				FileOutputStream fos = new FileOutputStream("Server.config");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				USERID = 0;
-				GROUPID = 0;
+				//USERID = 0;
+				//GROUPID = 0;
 				tables = new ServerTable();
-				oos.writeInt(USERID);
-				oos.writeInt(GROUPID);
+				//oos.writeInt(USERID);
+				//oos.writeInt(GROUPID);
 				oos.writeObject(tables);
 				oos.close();
 			} catch (FileNotFoundException e1) {
@@ -62,7 +62,7 @@ public class ServerConfig {
 		return tables;
 	}
 	
-	
+/*	
 	public int getUSERID(){
 		return USERID++;
 	}
@@ -70,14 +70,14 @@ public class ServerConfig {
 	public int getGROUPID(){
 		return GROUPID++;
 	}
-	
+*/	
 	public void close(){
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream("Server.config");	
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeInt(USERID);
-			oos.writeInt(GROUPID);
+			//oos.writeInt(USERID);
+			//oos.writeInt(GROUPID);
 			oos.writeObject(tables);
 			oos.close();
 		} catch (FileNotFoundException e) {
