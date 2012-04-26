@@ -48,6 +48,13 @@ public class ConsoleView implements Runnable{
 		cc.PostMessage(key, value);
 		//TODO: what if fail
 	}
+	
+	private void PostMessage(){
+		Put("input the message you want to post");
+		String message = Gets();
+		Put("input the group you want to post");
+		String groupID = Gets();
+	}
 
 	private void remove() {
 		Put("Please input the key to remove");
