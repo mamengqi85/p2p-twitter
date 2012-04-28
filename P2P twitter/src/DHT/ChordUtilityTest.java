@@ -9,10 +9,10 @@ import de.uniba.wiai.lspi.chord.service.ServiceException;
 
 
 public class ChordUtilityTest {
-/*	
+	/*
 	@Test
 	public void testAsynChord () {
-		fail("");
+		//fail("");
 		AsynChordDHT dht = new AsynChordDHT();
 		AsynChord chord1 = dht.create("12345");
 		AsynChord chord2 = dht.join("12345", "8181");
@@ -38,12 +38,13 @@ public class ChordUtilityTest {
 		dht.retrieveKey(chord3, myKey);
 		dht.retrieveKey(chord3, myKey2);
 		System.out.println("end Chord3:");
+		
+		dht.leave(chord2);
 	}
 	*/
-	
-//	@Test
-//	public void testChord () {
-	public static void main(String[] args) {
+	@Test
+	public void testChord () {
+//	public static void main(String[] args) {
 		ChordDHT dht = new ChordDHT();
 		//Chord chord1 = dht.create("127.0.0.1", "12345");
 		Chord chord1 = dht.create("12345");
@@ -74,6 +75,9 @@ public class ChordUtilityTest {
 		System.out.println("end Chord3:");
 		
 		//dht.leave(chord2);
+		Chord chord4 = dht.join("12345", "8383");
+		dht.leave(chord4);
+		
 /*		try {
 			chord3.leave();
 		} catch (ServiceException e) {
