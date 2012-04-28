@@ -70,4 +70,12 @@ public class AsynChordDHT {
 		chord.retrieve(myKey, callback);
 		//callback.retrieved(myKey, entries, null);
 	}
+	
+	public void leave(AsynChord chord) {
+		try {
+			chord.leave();
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+	}
 }

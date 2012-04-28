@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Set;
 
+import de.uniba.wiai.lspi.chord.com.local.ChordImplAccess;
 import de.uniba.wiai.lspi.chord.data.URL;
 import de.uniba.wiai.lspi.chord.service.Chord;
 import de.uniba.wiai.lspi.chord.service.ServiceException;
@@ -51,7 +52,7 @@ public class ChordDHT {
 	}
 	
 	public Chord join(String destPort, String localPort) {
-		de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
+		//de.uniba.wiai.lspi.chord.service.PropertiesLoader.loadPropertyFile();
 		String protocol = URL.KNOWN_PROTOCOLS.get(URL.SOCKET_PROTOCOL);
 		URL localURL = null;
 		try {
@@ -109,11 +110,24 @@ public class ChordDHT {
 	
 	public void leave(Chord chord) {
 		try {
+			System.out.println(chord);
+			Chord chord2 = chord;
+			chord = null;
+			chord2.leave();
+			System.out.println("Node left.");
+		} catch (Throwable t) {
+			System.out.println("Could not shut down node");
+			System.out.println(chord);
+			System.out.println(t.getMessage());
+			t.printStackTrace(System.out);
+		}
+			/*
+		try {
 			chord.leave();
 		} catch (ServiceException e) {
 			//e.printStackTrace();
 			throw new RuntimeException("Could not leave DHT!", e);
-		}
+		}*/
 	}
 	
 	public void insertKey(Chord chord, StringKey myKey, String data) {
