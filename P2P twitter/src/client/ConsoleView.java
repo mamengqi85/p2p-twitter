@@ -90,8 +90,6 @@ public class ConsoleView implements Runnable{
 		cc.joinGroup(name);
 	}
 	
-
-	
 	private String Gets(){
 		try {
 			String friend_id = bReader.readLine();
