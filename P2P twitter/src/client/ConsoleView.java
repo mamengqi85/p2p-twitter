@@ -123,10 +123,6 @@ public class ConsoleView implements Runnable{
 		}
 	}
 	
-	
-	
-	
-	
 	@Override
 	public void run() {
 		Init();
