@@ -3,6 +3,9 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import org.junit.runners.ParentRunner;
+
 import client.ClientConstants.COMMAND;
 
 
@@ -54,6 +57,7 @@ public class ConsoleView implements Runnable{
 		String message = Gets();
 		Put("input the group you want to post");
 		String groupID = Gets();
+		cc.preparePostMessage(groupID, message);
 	}
 
 	private void remove() {
@@ -145,7 +149,8 @@ public class ConsoleView implements Runnable{
 				login();
 				break;
 			case ADD:
-				add();
+				//add();
+				PostMessage();
 				break;
 			case REMOVE:
 				remove();
@@ -166,9 +171,8 @@ public class ConsoleView implements Runnable{
 
 
 	private void retrieve() {
-		Put("Please input the key to retrieve");
-		String key = Gets();
-		cc.retrieve(key);
+		Put("retrieve the message");
+		cc.retrieve();
 	}
 	
 }

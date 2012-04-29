@@ -45,14 +45,8 @@ public class P2Psecurity {
 		}
 	}
 	
-	public Object decrypt(byte[] data, PrivateKey pk){
-		try {
+	public Object decrypt(byte[] data, PrivateKey pk) throws Exception{
 			return rsa.decrypt(data, pk);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 	
 	public OnionPackage CreateOnionPackage(Node firstDest, Object data){
@@ -76,6 +70,7 @@ public class P2Psecurity {
 		OnionPackage NewOP = new OnionPackage();
 		NewOP.data = encrypt(OP, nextNode.pk);
 		NewOP.nextDest = nextNode;
+		NewOP.nextDest.dest = false;
 		return NewOP;
 	}
 	

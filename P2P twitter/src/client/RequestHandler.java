@@ -19,7 +19,7 @@ public class RequestHandler implements Runnable{
 	Socket socket;
 	static String SERVERIP = "localhost";
 	int SERVERPORT = 5412;
-	
+	public String message = "";
 	RequestMessage rm;
 	ClientController client;
 	
@@ -48,7 +48,7 @@ public class RequestHandler implements Runnable{
 			ObjectOutputStream oss = new ObjectOutputStream(socket.getOutputStream());
 			oss.writeObject(rm);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			client.callBack((ResponseMessage)ois.readObject());
+			client.callBack((ResponseMessage)ois.readObject(),message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
