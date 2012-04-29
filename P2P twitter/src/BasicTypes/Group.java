@@ -1,10 +1,12 @@
 package BasicTypes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import Server.ServerConfig;
 
-public class Group {
+public class Group implements Serializable{
     ArrayList<String> memberlist;
 	String groupName;
 	
@@ -31,5 +33,23 @@ public class Group {
 			return true;
 		}
 	}
+	
+	public String MemberListToString(){
+		String result = new String();
+		for (int i = 0; i < memberlist.size(); i++) {
+			result += memberlist.get(i) + "@";
+		}
+		return result;
+	}
+	
+	public static ArrayList<String> getMemberList(String str){
+		StringTokenizer st = new StringTokenizer(str,"@");
+		ArrayList<String> result = new ArrayList<String>();
+		while (st.hasMoreTokens()) {
+			result.add(st.nextToken());
+		}
+		return result;
+	}
+	
 	
 }

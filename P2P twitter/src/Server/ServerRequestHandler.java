@@ -22,6 +22,11 @@ public class ServerRequestHandler implements Runnable{
 		this.tables = tables;
 	}
 	
+	
+	String getGroupList(String groupname){
+		return tables.getGroupMemberlist(groupname);
+	}
+	
 	boolean register(UserInfo user){
 		if (tables.addUser(user)) {
 			return true;
@@ -35,7 +40,7 @@ public class ServerRequestHandler implements Runnable{
 				return true;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	boolean CreateGroup(String name){
@@ -103,8 +108,23 @@ public class ServerRequestHandler implements Runnable{
 				}else{
 					resM.result = RPCConstants.FAIL;
 				}
-			}else {
+			} else if(rm.opeID.equals(RPCConstants.GETGROUPLIST)){
+				String result = getGroupList(rm.parm);
+				if(result != null){
+					resM.result = result;
+				}else{
+					resM.result = RPCConstants.FAIL;
+				}
+			} else if(rm.opeID.equals(RPCConstants.GETNODE)){
+				Node node = tables.SelectRandomNode();
+				if(node != null){
+					resM.result = tables.SelectRandomNode().getString();
+				}else{
+					resM.result = RPCConstants.FAIL;
+				}
 				
+			}else {
+				resM.result = RPCConstants.FAIL;
 			}
 			oos.writeObject(resM);
 		} catch (IOException e) {

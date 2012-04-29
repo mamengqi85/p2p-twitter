@@ -35,7 +35,7 @@ public class MyPKI{
 	Signature sig;
 	
 
-    public static String xform = "RSA/NONE/PKCS1Padding";
+    public static String xform = "RSA";
 
         
 	private MyPKI(){

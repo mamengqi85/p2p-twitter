@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 public class ServerConfig {
 	//FileOutputStream fos = new FileOutputStream();
@@ -22,6 +23,7 @@ public class ServerConfig {
 			//USERID = ois.readInt();
 			//GROUPID = ois.readInt();
 			tables = (ServerTable)ois.readObject();
+			tables.availableList.clear();
 			ois.close();
 		} catch (FileNotFoundException e) {
 			try {

@@ -75,18 +75,29 @@ public class ServerTable implements Serializable{
 	}
 	
 	
+	public String getGroupMemberlist(String groupname){
+		if(!GroupIDList.containsKey(groupname)){
+			return null;
+		}
+		return GroupIDList.get(groupname).MemberListToString();
+	}
+	
+	
 	
 	//availableList should not be empty
 	public Node SelectRandomNode() {
+		if(availableList.isEmpty()){
+			return null;
+		}
 		Collection<String> keySet = availableList.keySet();
 		ArrayList<String> keyArray = new ArrayList<String>(keySet);
 		Random ran = new Random();
 		int r = ran.nextInt(keyArray.size());
 		String key = keyArray.get(r);
 		User user = availableList.get(key);
-		
 		return user.getNode();
 	}
+	
 	
 	//availableList should not be empty	
 	public Node selectFirstNode() {

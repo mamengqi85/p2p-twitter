@@ -1,9 +1,10 @@
 package BasicTypes;
 
+import java.io.Serializable;
 import java.util.StringTokenizer;
 
 
-public class User {
+public class User implements Serializable{
 	UserInfo basicInfo;
 	Node node;
 	
