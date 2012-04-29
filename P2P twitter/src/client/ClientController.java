@@ -28,7 +28,7 @@ import client.ClientConstants.COMMAND;
 import de.uniba.wiai.lspi.chord.service.Chord;
 
 public class ClientController {
-	boolean CommmandClient = false;
+	boolean CommmandClient = true;
 	private BufferedReader bReader;
 	boolean stop = false;
 	ConsoleView cV;
