@@ -71,6 +71,7 @@ public class ServerRequestHandler implements Runnable{
 				}
 			} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 				System.out.println("LOGIN");
+				System.out.println(rm.parm);
 				User user = new User(rm.parm);
 				resM.result = user.getBasicInfo().UserID + "~";
 				if (login(user)) {
