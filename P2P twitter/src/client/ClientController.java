@@ -28,7 +28,7 @@ import client.ClientConstants.COMMAND;
 import de.uniba.wiai.lspi.chord.service.Chord;
 
 public class ClientController {
-	boolean CommmandClient = true;
+	boolean CommmandClient = false;
 	private BufferedReader bReader;
 	boolean stop = false;
 	ConsoleView cV;
@@ -146,7 +146,6 @@ public class ClientController {
 		ClientController cc = new ClientController();
 	}
 	
-	
 	public ClientController(){
 		if(CommmandClient){
 			cV = new ConsoleView(this);
@@ -251,12 +250,18 @@ public class ClientController {
 		System.out.println("recieved response: " + rm.opeID);
 		System.out.println(rm.result);
 		if(rm.opeID.equals(RPCConstants.REGISTER)){
-			
+			if (!CommmandClient) {
+				gv.showMessage(rm.result);
+			}
 		} else if (rm.opeID.equals(RPCConstants.LOGIN)){
 			//parse result
 			StringTokenizer st = new StringTokenizer(rm.result,"~");
 			userID = st.nextToken();
-			if (Utility.StrToBool(st.nextToken())) {
+			String status = st.nextToken();
+			if (!CommmandClient) {
+				gv.showMessage(status);
+			}
+			if (Utility.StrToBool(status)) {
 				//send the request Node 
 				RequestNode();
 				String nextAction = st.nextToken();
@@ -269,28 +274,30 @@ public class ClientController {
 					Node node = new Node(nodeStr);
 					String destIp = node.ip.getHostAddress();
 					String destPort = Integer.toString(node.port);
-					System.out.println("dip"+destIp);
-					System.out.println("dport"+destPort);
-					System.out.println("ip"+ip);
-					System.out.println("port"+selfNode.port);
+					if (CommmandClient) {
+						System.out.println("dip"+destIp);
+						System.out.println("dport"+destPort);
+						System.out.println("ip"+ip);
+						System.out.println("port"+selfNode.port);
+					}
 					chord = dht.join(destIp, destPort, ip,Integer.toString(selfNode.port));
-					System.out.println("chord4"+ chord);
+					//TODO
+					//System.out.println("chord4"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.JOIN;
 				} else {
 					chord = dht.create(ip, Integer.toString(selfNode.port));
-					System.out.println("chord1"+ chord);
+					//TODO
+					//System.out.println("chord1"+ chord);
 					RequestMessage rqsM = new RequestMessage();
 					rqsM.callID = rm.callID;
 					rqsM.opeID = RPCConstants.CREATE;
-
 				}
 
 			}
 		} else if (rm.opeID.equals(RPCConstants.GETGROUPLIST)){
 			String members = rm.result;
-			//Node node = new Node();
 			if(nodes.isEmpty()){
 				RequestNode();
 				return null;
@@ -317,14 +324,8 @@ public class ClientController {
 
 		} else if (rm.opeID.equals(RPCConstants.RETRIEVE)){
 			
-
 		} else {
-			System.out.println("recieved response: " + rm.opeID);
-			System.out.println(rm.result);
-			if(rm.opeID.equals(RPCConstants.REGISTER)) {
-				gv.setRegStatus(rm.result);
-			}
-			return null;
+
 		}
 		return null;
 	}
