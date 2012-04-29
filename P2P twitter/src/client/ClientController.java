@@ -217,8 +217,10 @@ public class ClientController {
 			return false;
 		}
 		StringKey myKey = new StringKey(userID);
-		//dht.retrieveKey(chord, myKey);
-		System.out.println(dht.retrieveKey(chord, myKey));
+		if (CommmandClient)
+			System.out.println(dht.retrieveKey(chord, myKey));
+		else
+			gv.setRetrieveText(dht.retrieveKey(chord, myKey));
 		
 		return true;
 	}

@@ -1,14 +1,11 @@
 package client;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -20,6 +17,8 @@ import javax.swing.Timer;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+import java.util.Set;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -29,14 +28,17 @@ public class GUIView extends JFrame implements Runnable{
 
 	private ClientController cc;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textFieldR;
 	private JPasswordField passwordField;
-	private JTextField textField_1;
+	private JTextField textFieldL;
 	private JPasswordField passwordField_1;
-	private JTextField textField_2;
+	private JTextField textFieldS;
+	private JTextField textFieldG1;
+	private JTextField textFieldG2;
 	private JTextArea textArea_1;
 	private JTextField txtGroupid;
-	private int rfSpeed = 1000;//10 secs
+	private int rfSpeed = 20000;//5 secs
+	private static String rtText = "";
 
 	private void init(ClientController cc)
 	{
@@ -75,10 +77,10 @@ public class GUIView extends JFrame implements Runnable{
 			lblPassword.setBounds(117, 88, 71, 24);
 			registerTab.add(lblPassword);
 			
-			textField = new JTextField();
-			textField.setBounds(204, 55, 186, 24);
-			registerTab.add(textField);
-			textField.setColumns(10);
+			textFieldR = new JTextField();
+			textFieldR.setBounds(204, 55, 186, 24);
+			registerTab.add(textFieldR);
+			textFieldR.setColumns(10);
 			
 			passwordField = new JPasswordField();
 			passwordField.setBounds(204, 89, 186, 24);
@@ -89,7 +91,7 @@ public class GUIView extends JFrame implements Runnable{
 			registerTab.add(btnRegister);
 			btnRegister.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String username = textField.getText();
+					String username = textFieldR.getText();
 					String password = new String(passwordField.getPassword());
 					cc.register(username, password);
 				}
@@ -112,10 +114,10 @@ public class GUIView extends JFrame implements Runnable{
 			label_1.setBounds(117, 88, 71, 24);
 			loginTab.add(label_1);
 			
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
-			textField_1.setBounds(204, 55, 186, 24);
-			loginTab.add(textField_1);
+			textFieldL = new JTextField();
+			textFieldL.setColumns(10);
+			textFieldL.setBounds(204, 55, 186, 24);
+			loginTab.add(textFieldL);
 			
 			passwordField_1 = new JPasswordField();
 			passwordField_1.setBounds(204, 89, 186, 24);
@@ -126,8 +128,10 @@ public class GUIView extends JFrame implements Runnable{
 			loginTab.add(btnLogin);
 			btnLogin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String username = textField.getText();
-					String password = new String(passwordField.getPassword());
+					String username = textFieldL.getText();
+					String password = new String(passwordField_1.getPassword());
+					System.out.println(username);
+					System.out.println(password);
 					cc.login(username, password);
 				}
 			});
@@ -143,10 +147,10 @@ public class GUIView extends JFrame implements Runnable{
 		postTab.add(txtGroupid);
 		txtGroupid.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(89, 217, 318, 22);
-		postTab.add(textField_2);
-		textField_2.setColumns(10);
+		textFieldS = new JTextField();
+		textFieldS.setBounds(89, 217, 318, 22);
+		postTab.add(textFieldS);
+		textFieldS.setColumns(10);
 		
 		JButton btnSend = new JButton("send");
 		btnSend.setBounds(409, 217, 80, 23);
@@ -154,7 +158,7 @@ public class GUIView extends JFrame implements Runnable{
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String groupID = txtGroupid.getText();
-				String message = textField_2.getText();
+				String message = textFieldS.getText();
 				cc.preparePostMessage(groupID, message);
 			}
 		});
@@ -168,12 +172,22 @@ public class GUIView extends JFrame implements Runnable{
 		
 		textArea_1 = new JTextArea();
 		scrollPane.setViewportView(textArea_1);
+		textArea_1.setEditable(false);
+		textArea_1.setWrapStyleWord(true);
+		textArea_1.setLineWrap(true);
 		
 		Timer timer = new Timer(rfSpeed, new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	              cc.retrieve();
+	        	System.out.println("retrieveddd");
+	        	System.out.println(textFieldL.getText());
+	        	System.out.println("class"+rtText);
+	        	textArea_1.setText(rtText);
+	        	textArea_1.repaint();
+	        	System.out.println("area"+textArea_1.getText());
+	        	cc.retrieve();
 	        }
 	    });
+		timer.start();
 
 		JPanel groupTab = new JPanel();
 		tabbedPane.addTab("group", null, groupTab, null);
@@ -185,38 +199,38 @@ public class GUIView extends JFrame implements Runnable{
 			label.setBounds(101, 40, 93, 24);
 			groupTab.add(label);
 			
-			JLabel label_1 = new JLabel("Jion Group");
+			JLabel label_1 = new JLabel("Join Group");
 			label_1.setHorizontalAlignment(SwingConstants.CENTER);
 			label_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			label_1.setBounds(107, 119, 93, 24);
 			groupTab.add(label_1);
 			
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
-			textField_1.setBounds(204, 41, 186, 24);
-			groupTab.add(textField_1);
+			textFieldG1 = new JTextField();
+			textFieldG1.setColumns(10);
+			textFieldG1.setBounds(204, 41, 186, 24);
+			groupTab.add(textFieldG1);
 			
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(204, 120, 186, 24);
-			groupTab.add(textField_2);
+			textFieldG2 = new JTextField();
+			textFieldG2.setColumns(10);
+			textFieldG2.setBounds(204, 120, 186, 24);
+			groupTab.add(textFieldG2);
 			
 			JButton btnCreateG = new JButton("create");
 			btnCreateG.setBounds(204, 75, 93, 23);
 			groupTab.add(btnCreateG);
 			btnCreateG.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String groupName = textField_1.getText();
+					String groupName = textFieldG1.getText();
 					cc.createGroup(groupName);
 				}
 			});
 			
-			JButton btnJoinG = new JButton("jion");
+			JButton btnJoinG = new JButton("join");
 			btnJoinG.setBounds(204, 154, 93, 23);
 			groupTab.add(btnJoinG);
-			btnCreateG.addActionListener(new ActionListener() {
+			btnJoinG.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String groupName = textField_2.getText();
+					String groupName = textFieldG2.getText();
 					cc.joinGroup(groupName);
 				}
 			});
@@ -230,16 +244,19 @@ public class GUIView extends JFrame implements Runnable{
 		JOptionPane.showMessageDialog(this, str);
 	}
 	
-	public void appendRetrieveText(final String str) {
+	public void setRetrieveText(final Set<Serializable> text) {
+		/*
 		System.out.println(textArea_1.getText());
 	    Timer timer = new Timer(10, new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	textArea_1.append(str);
+	        	String str = text.toString();
+	        	textArea_1.setText(str);
 	        	textArea_1.repaint();
 	        }
 	    });
 	    timer.start();
-		System.out.println(str);
+		System.out.println(text);*/
+		rtText = text.toString();
 	}
 	
 	/**
