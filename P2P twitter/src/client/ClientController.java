@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.StringTokenizer;
@@ -28,7 +29,7 @@ import client.ClientConstants.COMMAND;
 import de.uniba.wiai.lspi.chord.service.Chord;
 
 public class ClientController {
-	boolean CommmandClient = true;
+	boolean CommmandClient = false;
 	private BufferedReader bReader;
 	boolean stop = false;
 	ConsoleView cV;
