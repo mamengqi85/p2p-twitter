@@ -87,9 +87,5 @@ public class ServerConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-	
-	
-	
+	}	
 }
