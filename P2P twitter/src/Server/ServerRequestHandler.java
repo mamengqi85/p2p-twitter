@@ -50,6 +50,13 @@ public class ServerRequestHandler implements Runnable{
 	boolean JoinGroup(String Groupname, String userID){
 		return tables.JoinGroup(Groupname, userID);
 	}
+	
+	boolean leave(String userID) {
+		if (tables.removeAvailUser(userID)) {
+			return true;
+		}
+		return true;
+	}
 
 	@Override
 	public void run() {
@@ -123,8 +130,10 @@ public class ServerRequestHandler implements Runnable{
 				}else{
 					resM.result = RPCConstants.FAIL;
 				}
-				
-			}else {
+			} else if (rm.opeID.equals(RPCConstants.LEAVE)) {
+				String userID = rm.parm;
+				leave(userID);
+			} else {
 				resM.result = RPCConstants.FAIL;
 			}
 			oos.writeObject(resM);

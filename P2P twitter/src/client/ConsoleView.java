@@ -90,6 +90,10 @@ public class ConsoleView implements Runnable{
 		cc.joinGroup(name);
 	}
 	
+	private void leave() {
+		cc.leave();
+	}
+	
 	private String Gets(){
 		try {
 			String friend_id = bReader.readLine();
@@ -108,9 +112,9 @@ public class ConsoleView implements Runnable{
 	COMMAND ParseCommand(String str){
 		if(str.toLowerCase().equals("l")){
 			return COMMAND.LOGIN;
-		}else if(str.toLowerCase().equals("rg")){
+		} else if(str.toLowerCase().equals("rg")) {
 			return COMMAND.REGISTER;
-		}else if(str.toLowerCase().equals("rt")){
+		} else if(str.toLowerCase().equals("rt")) {
 			return COMMAND.RETRIEVE;
 		} else if (str.toLowerCase().equals("a")) {
 			return COMMAND.ADD;
@@ -120,7 +124,9 @@ public class ConsoleView implements Runnable{
 			return COMMAND.CREATEGROUP;
 		} else if (str.toLowerCase().equals("jg")) {
 			return COMMAND.JOINGROUP;
-		}else{
+		} else if (str.toLowerCase().equals("q")) {
+			return COMMAND.LEAVE;
+		} else{
 			return COMMAND.INVALID;
 		}
 	}
@@ -159,6 +165,8 @@ public class ConsoleView implements Runnable{
 			case JOINGROUP:
 				joinGroup();
 				break;
+			case LEAVE:
+				leave();
 			default:
 				break;
 			}

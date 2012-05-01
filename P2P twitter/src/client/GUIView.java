@@ -17,6 +17,8 @@ import javax.swing.Timer;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -24,7 +26,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-public class GUIView extends JFrame implements Runnable{
+public class GUIView extends JFrame implements Runnable, WindowListener{
 
 	private ClientController cc;
 	private JPanel contentPane;
@@ -274,5 +276,40 @@ public class GUIView extends JFrame implements Runnable{
 				}
 			}
 		});
+	}
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosing(WindowEvent e) {
+		cc.leave();
+		
+	}
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
