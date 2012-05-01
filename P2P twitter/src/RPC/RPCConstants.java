@@ -13,6 +13,7 @@ public class RPCConstants{
 	public static String FAIL = "fail";
 	public static String GETGROUPLIST = "getgrouplist";
 	public static String GETNODE = "getNode";
+	public static String LEAVE = "leave";
 	public enum REQUEST{
 		CREATE, LOGIN, RETRIEVE, REGISTER, JOIN, INVALID
 	}

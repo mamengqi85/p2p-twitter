@@ -136,7 +136,7 @@ public class ClientController {
 		reqM.opeID = RPCConstants.GETGROUPLIST;
 		reqM.parm = groupname;
 		sendRequestWithMessage(reqM, message);
-	} 
+	}
 	
 	
 	public boolean isDHTempty(){
@@ -166,7 +166,16 @@ public class ClientController {
 	}
 	
 	
-	
+	public void leave() {
+		if(isDHTempty()){
+			return;
+		}
+		dht.leave(chord);
+		RequestMessage reqM = new RequestMessage();
+		reqM.opeID = RPCConstants.LEAVE;
+		reqM.parm = userID;
+		sendRequest(reqM);
+	}
 	
 	public void login(String username, String password){
 		//Node node = new Node();

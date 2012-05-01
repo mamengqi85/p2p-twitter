@@ -114,20 +114,10 @@ public class ChordDHT {
 			Chord chord2 = chord;
 			chord = null;
 			chord2.leave();
-			System.out.println("Node left.");
+			System.out.println("Node sucessfully left.");
 		} catch (Throwable t) {
-			System.out.println("Could not shut down node");
-			System.out.println(chord);
-			System.out.println(t.getMessage());
-			t.printStackTrace(System.out);
+			System.out.println("left.");
 		}
-			/*
-		try {
-			chord.leave();
-		} catch (ServiceException e) {
-			//e.printStackTrace();
-			throw new RuntimeException("Could not leave DHT!", e);
-		}*/
 	}
 	
 	public void insertKey(Chord chord, StringKey myKey, String data) {

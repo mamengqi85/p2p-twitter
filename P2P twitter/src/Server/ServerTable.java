@@ -51,6 +51,14 @@ public class ServerTable implements Serializable{
 		return false;
 	}
 	
+	public boolean removeAvailUser(String userID) {
+		if (!availableList.containsKey(userID)) {
+			return false;
+		}
+		availableList.remove(userID);
+		return true;
+	}
+	
 	public ServerTable(){
 		userlist = new HashMap<String, UserInfo>();
 		availableList = new HashMap<String, User>();
