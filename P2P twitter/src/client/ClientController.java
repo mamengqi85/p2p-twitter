@@ -20,6 +20,8 @@ import DHT.StringKey;
 import RPC.RPCConstants;
 import RPC.RequestMessage;
 import RPC.ResponseMessage;
+import Security.MyKey;
+import Security.MyPKI;
 import Security.OnionPackage;
 import Security.P2Psecurity;
 import Security.SerilizeKey;
@@ -34,6 +36,7 @@ public class ClientController {
 	boolean stop = false;
 	ConsoleView cV;
 	GUIView gv;
+	Login lg;
 	private Node selfNode;
 	public Node getSelfNode() {
 		return selfNode;
@@ -54,6 +57,29 @@ public class ClientController {
 	
 	
 	//private method
+	
+	private void StartGUIView(){
+		gv = new GUIView(this);
+		Thread t = new Thread(gv);
+		t.start();
+	}
+	
+	private void startLogin(){
+		lg = new Login(this);
+		Thread t = new Thread(lg);
+		t.start();
+	}
+	
+	
+	private void initialSecurity(){
+		MyPKI mp = MyPKI.getInstance();
+		MyKey myKey = mp.generateKeyPair();
+		PublicKey pKey = myKey.pubKey;
+		PrivateKey prKey = myKey.privKey;
+		SerilizeKey.WritePublicKey(pKey);
+		SerilizeKey.WritePrivateKey(prKey,"cs5300cornell");
+	}
+	
 	private void sendRequest(RequestMessage rm){
 		RequestHandler rh = new RequestHandler(rm, this);
 		Thread t = new Thread(rh);
@@ -153,10 +179,12 @@ public class ClientController {
 			Thread t = new Thread(cV);
 			t.start();
 		} else {
-			gv = new GUIView(this);
-			Thread t = new Thread(gv);
-			t.start();
+			startLogin();
+			//gv = new GUIView(this);
+			//Thread t = new Thread(gv);
+			//t.start();
 		}
+		initialSecurity();
 		selfNode = new Node();
 		cr = new ClientReciver(this,selfNode.serverport);
 		Thread t = new Thread(cr);
@@ -271,9 +299,12 @@ public class ClientController {
 			userID = st.nextToken();
 			String status = st.nextToken();
 			if (!CommmandClient) {
-				gv.showMessage(status);
+				//gv.showMessage(status);
 			}
 			if (Utility.StrToBool(status)) {
+				if(!CommmandClient){
+					StartGUIView();
+				}
 				//send the request Node 
 				RequestNode();
 				String nextAction = st.nextToken();
@@ -307,6 +338,8 @@ public class ClientController {
 					rqsM.opeID = RPCConstants.CREATE;
 				}
 
+			}else{
+				startLogin();
 			}
 		} else if (rm.opeID.equals(RPCConstants.GETGROUPLIST)){
 			String members = rm.result;

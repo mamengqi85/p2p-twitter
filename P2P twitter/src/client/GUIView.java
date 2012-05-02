@@ -25,15 +25,12 @@ import java.util.Set;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Color;
 
 public class GUIView extends JFrame implements Runnable, WindowListener{
 
 	private ClientController cc;
 	private JPanel contentPane;
-	private JTextField textFieldR;
-	private JPasswordField passwordField;
-	private JTextField textFieldL;
-	private JPasswordField passwordField_1;
 	private JTextField textFieldS;
 	private JTextField textFieldG1;
 	private JTextField textFieldG2;
@@ -55,107 +52,92 @@ public class GUIView extends JFrame implements Runnable, WindowListener{
 		setTitle("P2P Twitter Client");
 		setBounds(100, 100, 530, 333);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFont(new Font("Nanum Pen Script", Font.BOLD, 17));
 		tabbedPane.setBounds(10, 10, 494, 275);
 		contentPane.add(tabbedPane);
 		
-		JPanel registerTab = new JPanel();
-		tabbedPane.addTab("register", null, registerTab, null);
-		registerTab.setLayout(null);
-		{
-			JLabel lblUsername = new JLabel("Username");
-			lblUsername.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
-			lblUsername.setBounds(117, 54, 71, 24);
-			registerTab.add(lblUsername);
-			
-			JLabel lblPassword = new JLabel("Password");
-			lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPassword.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			lblPassword.setBounds(117, 88, 71, 24);
-			registerTab.add(lblPassword);
-			
-			textFieldR = new JTextField();
-			textFieldR.setBounds(204, 55, 186, 24);
-			registerTab.add(textFieldR);
-			textFieldR.setColumns(10);
-			
-			passwordField = new JPasswordField();
-			passwordField.setBounds(204, 89, 186, 24);
-			registerTab.add(passwordField);
-			
-			JButton btnRegister = new JButton("register");
-			btnRegister.setBounds(204, 134, 93, 23);
-			registerTab.add(btnRegister);
-			btnRegister.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					String username = textFieldR.getText();
-					String password = new String(passwordField.getPassword());
-					cc.register(username, password);
+				JPanel groupTab = new JPanel();
+				groupTab.setBackground(Color.BLACK);
+				tabbedPane.addTab("group", null, groupTab, null);
+				groupTab.setLayout(null);
+				{
+					JLabel label = new JLabel("Create Group");
+					label.setForeground(Color.WHITE);
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					label.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					label.setBounds(101, 40, 93, 24);
+					groupTab.add(label);
+					
+					JLabel label_1 = new JLabel("Join Group");
+					label_1.setForeground(Color.WHITE);
+					label_1.setHorizontalAlignment(SwingConstants.CENTER);
+					label_1.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					label_1.setBounds(107, 119, 93, 24);
+					groupTab.add(label_1);
+					
+					textFieldG1 = new JTextField();
+					textFieldG1.setForeground(Color.BLACK);
+					textFieldG1.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					textFieldG1.setColumns(10);
+					textFieldG1.setBounds(204, 41, 186, 24);
+					groupTab.add(textFieldG1);
+					
+					textFieldG2 = new JTextField();
+					textFieldG2.setForeground(Color.BLACK);
+					textFieldG2.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					textFieldG2.setColumns(10);
+					textFieldG2.setBounds(204, 120, 186, 24);
+					groupTab.add(textFieldG2);
+					
+					JButton btnCreateG = new JButton("create");
+					btnCreateG.setForeground(Color.BLACK);
+					btnCreateG.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					btnCreateG.setBounds(204, 75, 93, 23);
+					groupTab.add(btnCreateG);
+					btnCreateG.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							String groupName = textFieldG1.getText();
+							cc.createGroup(groupName);
+						}
+					});
+					
+					JButton btnJoinG = new JButton("join");
+					btnJoinG.setForeground(Color.BLACK);
+					btnJoinG.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+					btnJoinG.setBounds(204, 154, 93, 23);
+					groupTab.add(btnJoinG);
+					btnJoinG.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							String groupName = textFieldG2.getText();
+							cc.joinGroup(groupName);
+						}
+					});
 				}
-			});
-		}
-		
-		JPanel loginTab = new JPanel();
-		tabbedPane.addTab("log in", null, loginTab, null);
-		loginTab.setLayout(null);
-		{
-			JLabel label = new JLabel("Username");
-			label.setHorizontalAlignment(SwingConstants.CENTER);
-			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label.setBounds(117, 54, 71, 24);
-			loginTab.add(label);
-			
-			JLabel label_1 = new JLabel("Password");
-			label_1.setHorizontalAlignment(SwingConstants.CENTER);
-			label_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label_1.setBounds(117, 88, 71, 24);
-			loginTab.add(label_1);
-			
-			textFieldL = new JTextField();
-			textFieldL.setColumns(10);
-			textFieldL.setBounds(204, 55, 186, 24);
-			loginTab.add(textFieldL);
-			
-			passwordField_1 = new JPasswordField();
-			passwordField_1.setBounds(204, 89, 186, 24);
-			loginTab.add(passwordField_1);
-			
-			JButton btnLogin = new JButton("login");
-			btnLogin.setBounds(204, 134, 93, 23);
-			loginTab.add(btnLogin);
-			btnLogin.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					String username = textFieldL.getText();
-					String password = new String(passwordField_1.getPassword());
-					System.out.println(username);
-					System.out.println(password);
-					cc.login(username, password);
-				}
-			});
-		}
 		
 		JPanel postTab = new JPanel();
+		postTab.setBackground(Color.BLACK);
 		tabbedPane.addTab("post", null, postTab, null);
 		postTab.setLayout(null);
 		
 		txtGroupid = new JTextField();
-		txtGroupid.setText("GroupID");
-		txtGroupid.setBounds(10, 217, 74, 22);
+		txtGroupid.setBounds(85, 152, 74, 22);
 		postTab.add(txtGroupid);
 		txtGroupid.setColumns(10);
 		
 		textFieldS = new JTextField();
-		textFieldS.setBounds(89, 217, 318, 22);
+		textFieldS.setBounds(85, 186, 277, 22);
 		postTab.add(textFieldS);
 		textFieldS.setColumns(10);
 		
 		JButton btnSend = new JButton("send");
-		btnSend.setBounds(409, 217, 80, 23);
+		btnSend.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+		btnSend.setBounds(374, 187, 80, 23);
 		postTab.add(btnSend);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,7 +151,7 @@ public class GUIView extends JFrame implements Runnable, WindowListener{
 		scrollPane.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(10, 10, 469, 197);
+		scrollPane.setBounds(10, 10, 439, 130);
 		postTab.add(scrollPane);
 		
 		textArea_1 = new JTextArea();
@@ -178,10 +160,21 @@ public class GUIView extends JFrame implements Runnable, WindowListener{
 		textArea_1.setWrapStyleWord(true);
 		textArea_1.setLineWrap(true);
 		
+		JLabel lblGroupid = new JLabel("GroupID");
+		lblGroupid.setForeground(Color.WHITE);
+		lblGroupid.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+		lblGroupid.setBounds(12, 155, 61, 16);
+		postTab.add(lblGroupid);
+		
+		JLabel lblText = new JLabel("Text");
+		lblText.setForeground(Color.WHITE);
+		lblText.setFont(new Font("Nanum Pen Script", Font.BOLD, 18));
+		lblText.setBounds(12, 189, 61, 16);
+		postTab.add(lblText);
+		
 		Timer timer = new Timer(rfSpeed, new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	System.out.println("retrieveddd");
-	        	System.out.println(textFieldL.getText());
 	        	System.out.println("class"+rtText);
 	        	textArea_1.setText(rtText);
 	        	textArea_1.repaint();
@@ -190,56 +183,18 @@ public class GUIView extends JFrame implements Runnable, WindowListener{
 	        }
 	    });
 		timer.start();
-
-		JPanel groupTab = new JPanel();
-		tabbedPane.addTab("group", null, groupTab, null);
-		groupTab.setLayout(null);
-		{
-			JLabel label = new JLabel("Create Group");
-			label.setHorizontalAlignment(SwingConstants.CENTER);
-			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label.setBounds(101, 40, 93, 24);
-			groupTab.add(label);
-			
-			JLabel label_1 = new JLabel("Join Group");
-			label_1.setHorizontalAlignment(SwingConstants.CENTER);
-			label_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label_1.setBounds(107, 119, 93, 24);
-			groupTab.add(label_1);
-			
-			textFieldG1 = new JTextField();
-			textFieldG1.setColumns(10);
-			textFieldG1.setBounds(204, 41, 186, 24);
-			groupTab.add(textFieldG1);
-			
-			textFieldG2 = new JTextField();
-			textFieldG2.setColumns(10);
-			textFieldG2.setBounds(204, 120, 186, 24);
-			groupTab.add(textFieldG2);
-			
-			JButton btnCreateG = new JButton("create");
-			btnCreateG.setBounds(204, 75, 93, 23);
-			groupTab.add(btnCreateG);
-			btnCreateG.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					String groupName = textFieldG1.getText();
-					cc.createGroup(groupName);
-				}
-			});
-			
-			JButton btnJoinG = new JButton("join");
-			btnJoinG.setBounds(204, 154, 93, 23);
-			groupTab.add(btnJoinG);
-			btnJoinG.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					String groupName = textFieldG2.getText();
-					cc.joinGroup(groupName);
-				}
-			});
-		}
 		
 		JPanel aboutTab = new JPanel();
 		tabbedPane.addTab("about", null, aboutTab, null);
+		aboutTab.setLayout(null);
+		
+		JLabel lblTaoLiu = new JLabel("Tao Liu");
+		lblTaoLiu.setBounds(72, 73, 46, 16);
+		aboutTab.add(lblTaoLiu);
+		
+		JLabel lblNewLabel = new JLabel("ZhiTu Chen");
+		lblNewLabel.setBounds(75, 101, 87, 16);
+		aboutTab.add(lblNewLabel);
 	}
 	
 	public void showMessage(String str) {

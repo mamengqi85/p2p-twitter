@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class SerilizeKeyTest extends TestCase {
 
     public static void main(String[] args){
-                MyPKI mp = MyPKI.getInstance();
+        MyPKI mp = MyPKI.getInstance();
 		MyKey myKey = mp.generateKeyPair();
 		PublicKey pKey = myKey.pubKey;
 		PrivateKey prKey = myKey.privKey;
